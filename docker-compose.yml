@@ -25,4 +25,4 @@ services:
     network_mode: "portfolio"
 
 networks:
-  sample-network:
+    portfolio:
