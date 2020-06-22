@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    container_name: php
+    container_name: urano-php
     build:
       context: ./php
       dockerfile: Dockerfile
@@ -15,7 +15,7 @@ services:
     
 
   db1:
-    container_name: mysql
+    container_name: urano-mysql
     build:
       context: ./mysql
       dockerfile: Dockerfile
