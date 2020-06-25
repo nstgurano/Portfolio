@@ -17,7 +17,7 @@
     //     ※
 
     
-    $n=5;//5の場合のみひし形完成
+    $n=rand(3,20)*2-1;///
     $center=ceil($n/2);
 
     diamondUpper($n,$center);
@@ -26,7 +26,7 @@
     function diamondUpper($n,$center)
     {
       for ($i=1; $i <=$center ; $i++) { 
-        for ($a=1; $a <=$n-$i-2 ; $a++) { 
+        for ($a=1; $a <=$center-$i ; $a++) { 
           echo '&nbsp&nbsp';
         }
         for ($b=1; $b <=$i*2-1 ; $b++) { 
