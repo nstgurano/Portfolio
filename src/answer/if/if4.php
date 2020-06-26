@@ -21,16 +21,16 @@
         echo '大吉です。';
         break;
 
-        case '1':
-          echo '中吉です。';
-          break;
+      case '1':
+        echo '中吉です。';
+        break;
 
-          case '2':
-            echo '小吉です。';
-            break;
+      case '2':
+        echo '小吉です。';
+        break;
 
       default:
-            echo '末吉です';
+        echo '末吉です';
         break;
     }
   ?>
