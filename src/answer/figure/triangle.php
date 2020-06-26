@@ -21,10 +21,10 @@
     function triangle($n)
     {
       for ($i=1; $i <=$n ; $i++) { //
-        for ($s=1; $s <=$n-$i ; $s++) { 
-          echo '&nbsp';
+        for ($j=1; $j <=$n-$i ; $j++) { 
+          echo '&nbsp&nbsp';
         }
-        for ($x=1; $x <=$i*2-1 ; $x++) { 
+        for ($j=1; $j <=$i*2-1 ; $j++) { 
           echo '*';
         }
         echo '<br>';
