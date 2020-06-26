@@ -14,7 +14,8 @@
     echo $colors[0].'<br>';
     // $colorsの末尾に白を追加し、$colorsの最後の要素をechoしてください。
     $colors[]='白';
-    echo $colors[3].'<br>';
+    $a=count($colors)-1;
+    echo $colors[$a].'<br>';
 
   ?>
 
