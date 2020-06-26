@@ -33,7 +33,6 @@
 
     for ($i=1; $i <$b ; $i++) { 
       $tmp=$a[$i];
-      var_dump($tmp);
       for ($x=$i-1; 0<=$x ; $x--) { 
         if ($tmp<$a[$x]) {
           $a[$x+1]=$a[$x];
