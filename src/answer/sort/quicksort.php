@@ -18,9 +18,9 @@
   // 上のように実行の過程も表示してください。
   $b=count($a);
 
-  quikSort($a,$b);
+  quickSort($a,$b);
 
-  function quikSort($a,$b)
+  function quickSort($a,$b)
   {
     echo '【初期値】';
     echo '<br>';
@@ -29,33 +29,43 @@
     }
     echo '<br>';
 
-    $first=0;
-    $last=$b-1;
-    $center=floor($b/2);
+  do{
+    $first=0;//
+    $last=$b-1;//
+    $center=floor($b/2);//
+    $left=[];//
+    $right=[];//
 
-    while ($a[$center]>$a[$last]) {
+    while ($a[$last]>$a[$center]) {//
       $last--;
     }
 
-    while ($a[$first]>$a[$center]) {
+    while ($a[$first]<$a[$center]) {//
       $first++;
     }
-    if ($a[$first]<=$a[$last]) {
-      $tmp=$a[$first];
-      $a[$first]=$a[$last];
+
+    echo $a[$first].'と'.$a[$last].'を交換します';
+    if ($first<=$last) {//
+      $tmp=$a[$last];
+      $a[$last]=$a[$first];
       $a[$first]=$tmp;
-      $first++;
+
+      $left[]=$a[$first];//
+      $right[]=$a[$last];
+      $first++;//
       $last--;
     }
-
 
     echo '<br>';
     foreach ($a as $key) {
       echo $key.'&nbsp';
     }
     echo '<br>';
-    echo $a[$first].'と'.$a[$last].'を交換します';
-    echo '<br>';
+  }while ($first<=$last);//
+  
+  //左と右のソートの条件式がまだわからず
+
+
   }
 
   ?>
