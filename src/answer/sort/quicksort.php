@@ -16,12 +16,17 @@
   // 範囲:0-9 基準値: 7 [3]と[8]を入れ替え
   // 5 3 1 4 7 6 8 2 9 10
   // 上のように実行の過程も表示してください。
-  $b=count($a);
 
   quickSort($a,0,$b-1);
 
   function quickSort(&$a,$first,$last)
   {
+    $first=0;
+    $last=count($a)-1;
+    $left=[];
+    $pivot=[];
+    $right=[];
+
     echo '【初期値】';
     echo '<br>';
     foreach ($a as $key) {
@@ -29,12 +34,11 @@
     }
     echo '<br>';
 
-  do{
+  while ($first<=$last) {
     $firstpoint=$first;//
     $lastpoint=$last;//
-    $center=$a[intval($firstpoint+$lastpoint)/2];//
-    $left=[];//
-    $right=[];//
+    $center=ceil(($firstpoint+$lastpoint)/2);//
+
 
     while ($a[$lastpoint]>$a[$center]) {//
       $lastpoint--;
@@ -44,29 +48,31 @@
       $firstpoint++;
     }
 
-    echo $a[$firstpoint].'と'.$a[$lastpoint].'を交換します';
-    if ($firstpoint<=$lastpoint) {//
+
+    if ($a[$center]==$a[$firstpoint]) {
+    break;
+
+    }elseif ($a[$center]==$lastpoint) {
+    break;
+
+    }elseif ($firstpoint<=$lastpoint) {//
+      echo'基準値は'.$a[$center].'、'. $a[$firstpoint].'と'.$a[$lastpoint].'を交換します';
       $tmp=$a[$lastpoint];
       $a[$lastpoint]=$a[$firstpoint];
       $a[$firstpoint]=$tmp;
+
       $firstpoint++;//
       $lastpoint--;
     }
+
 
     echo '<br>';
     foreach ($a as $key) {
       echo $key.'&nbsp';
     }
     echo '<br>';
+  }
 
-  }while ($firstpoint<=$lastpoint);//
-
-    if ($first<$lastpoint) {
-     quickSort($a,$first,$lastpoint);
-    }
-    if ($firstpoint<$last) {
-     quickSort($a,$firstpoint,$last);
-    }
   }
 
   ?>
