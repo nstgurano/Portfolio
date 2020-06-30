@@ -32,30 +32,38 @@
     // ※上の出力はあくまで例です。ご自分でわかりやすい出力に書き換えて下さっても構いません。
 
 // 検索するソート済みの配列データです
-    $a = range(0, 20);
-    $b = count($a);
-    $center = ceil($b/2);
-    $request=5;
+  $a=0;
+  $b=20;
 
-    $first=0;
-    $last=$b-1;
 
-    $left=[];
-    $right=[];
+  $c = range($a, $b);//昇順の数を指定
+  $request=15;//探す値
 
-    while ($first<=$last) {
+  $first=0;//$cの最初の値
+  $last=count($c)-1;//$cの最後の値
+  $index=null;//探す値のキー
 
-      while ($a[$last]>$a[$center]) {//
-        $last--;
-      }
 
-      while ($a[$first]<$a[$center]) {//
-        $first++;
-      }
-      $left[]=$a[$first];//
-      $right[]=$a[$last];
+  while ($first<=$last) {//最初の値と最後の値の中に探す値があるときに繰り返す
+    $center=floor(($last+$first)/2);//真ん中の数値
+    echo '['.$a.']'.'が左端の番号です。'.'['.$center.']'.'が真ん中の番号です。'.'['.$b.']'.'が左端の番号です。';
+    echo '<br>';
+    echo $c[$center].'と'.$request.'を比較します'.'<br>';
+    if ($c[$center]==$request) {//真ん中の数値と探す数値が一緒
+      echo '一致しました。終了します。'.'<br>';
+      $index=$center;
+      break;
+    }elseif ($c[$center]<$request) {//探す数値より真ん中の数値のほうが小さい
+      echo '一致しません'.'<br>';
+      $first=$center+1;//探す範囲が真ん中より１つ大きくなる
+    }else {//探す数値より真ん中の数値のほうが大きい
+      echo '一致しません'.'<br>';
+      $last=$center-1;//探す範囲が真ん中より一つ小さくなる
     }
-    var_dump($right);
+  }
+  
+  echo '見つかった番号＝'.$c[$index];
+
 
 ?>
 
