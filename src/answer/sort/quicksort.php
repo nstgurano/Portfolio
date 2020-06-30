@@ -18,9 +18,9 @@
   // 上のように実行の過程も表示してください。
   $b=count($a);
 
-  quickSort($a,$b);
+  quickSort($a,0,$b-1);
 
-  function quickSort($a,$b)
+  function quickSort(&$a,$first,$last)
   {
     echo '【初期値】';
     echo '<br>';
@@ -30,30 +30,27 @@
     echo '<br>';
 
   do{
-    $first=0;//
-    $last=$b-1;//
-    $center=floor($b/2);//
+    $firstpoint=$first;//
+    $lastpoint=$last;//
+    $center=$a[intval($firstpoint+$lastpoint)/2];//
     $left=[];//
     $right=[];//
 
-    while ($a[$last]>$a[$center]) {//
-      $last--;
+    while ($a[$lastpoint]>$a[$center]) {//
+      $lastpoint--;
     }
 
-    while ($a[$first]<$a[$center]) {//
-      $first++;
+    while ($a[$firstpoint]<$a[$center]) {//
+      $firstpoint++;
     }
 
-    echo $a[$first].'と'.$a[$last].'を交換します';
-    if ($first<=$last) {//
-      $tmp=$a[$last];
-      $a[$last]=$a[$first];
-      $a[$first]=$tmp;
-
-      $left[]=$a[$first];//
-      $right[]=$a[$last];
-      $first++;//
-      $last--;
+    echo $a[$firstpoint].'と'.$a[$lastpoint].'を交換します';
+    if ($firstpoint<=$lastpoint) {//
+      $tmp=$a[$lastpoint];
+      $a[$lastpoint]=$a[$firstpoint];
+      $a[$firstpoint]=$tmp;
+      $firstpoint++;//
+      $lastpoint--;
     }
 
     echo '<br>';
@@ -61,11 +58,15 @@
       echo $key.'&nbsp';
     }
     echo '<br>';
-  }while ($first<=$last);//
-  
-  //左と右のソートの条件式がまだわからず
 
+  }while ($firstpoint<=$lastpoint);//
 
+    if ($first<$lastpoint) {
+     quickSort($a,$first,$lastpoint);
+    }
+    if ($firstpoint<$last) {
+     quickSort($a,$firstpoint,$last);
+    }
   }
 
   ?>
