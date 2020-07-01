@@ -25,11 +25,11 @@
 Hanoi(3,"A","B","C");
 
 function Hanoi($n, $from, $work, $dest) {//上記のコメントアウトの通りの変数設定
-  if ($n>0) {//移動させる円盤の数は0以上である
-   // Hanoi($n-1,$from,$dest,$work);//上からn-1番目の円盤を使う、AからCへ移す
+  if ($n>0) {//移動させる円盤の数は0以上である、再起処理終了条件
+    Hanoi($n-1,$from,$dest,$work);//destとworkがn=1になるまで入れ替わっていく、A→Cへの移動
     echo 'Move to the disk '.$n.' from '.$from.' to '.$dest;
     echo '<br>';
-    Hanoi($n-1,$work,$from,$dest);//上からn-1番目の円盤をBからへA移す
+    Hanoi($n-1,$work,$from,$dest);//円盤の数は2枚だけ、A⇔Bの移動
   }
 }
 
