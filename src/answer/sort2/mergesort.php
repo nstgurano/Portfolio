@@ -47,7 +47,53 @@
 	// Array ( [0] => 1 [1] => 2 [2] => 7 [3] => 8 [4] => 10 [5] => 12 [6] => 13 [7] => 16 [8] => 20 )
 	// ※上の出力はあくまで例です。ご自分でわかりやすい出力に書き換えて下さっても構いません。
 	$numbers = array(20,10,2,12,7,16,8,13,1);
+
+	echo '【初期値】'.'<br>';
+	foreach ($numbers as $key) {
+		echo $key.'&nbsp';
+	}
+	echo '<br>';
+
+	mergesort($numbers);
+
+	function mergesort(&$numbers)
+	{
+		$last=count($numbers)-1;
+		$center=floor(count($numbers)/2);
+		$left=[];
+		$right=[];
+		for ($i=0; $i <$center ; $i++) { 
+			$left[]=$numbers[$i];
+		}
+		for ($j=$center; $j <=$last ; $j++) { 
+			$right[]=$numbers[$j];
+		}
+
+
+		if (count($left)>1) {
+			mergesort($left);
+		}
+
+		if (count($right)>1) {
+			mergesort($right);
+		}
+		for ($k=0; $k <$last ; $k++) { 
+			if ($left[$k]>$right[$k]) {
+				echo '左【'.$left[$k].'】と右【'.$right[$k].'】を交換'.'<br>';
+				$tmp=$left[$k];
+				$left[$k]=$right[$k];
+				$right[$k]=$tmp;
+			}
+		}
+		echo var_dump($left).'左部分の２分割'.'<br>';
+		echo var_dump($right).'右部分の２分割'.'<br>';
+
+
+
+	}
 	
+
+
   ?>
 
 </body>
