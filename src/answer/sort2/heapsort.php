@@ -34,18 +34,19 @@
 		echo $key.'&nbsp';
 	}
 
-	function echo_tree(&$arr){
+	function echo_tree($nums){
 		global $br;
-		$br='<br>';
+		$br="<br>";
         $string="";
-        $string.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$arr[0]}".$br;
+        $string.=$br."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$nums[0]}".$br;
         $string.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;／&nbsp;&nbsp;&nbsp;＼".$br;
-        $string.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$arr[1]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$arr[2]}".$br;
+        $string.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$nums[1]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$nums[2]}".$br;
         $string.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;／&nbsp;&nbsp;&nbsp;＼&nbsp;&nbsp;&nbsp;／&nbsp;&nbsp;&nbsp;＼".$br;
-        $string.="&nbsp;&nbsp;&nbsp;&nbsp;{$arr[3]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$arr[4]}&nbsp;{$arr[5]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$array[6]}".$br;
+        $string.="&nbsp;&nbsp;&nbsp;&nbsp;{$nums[3]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$nums[4]}&nbsp;{$nums[5]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$nums[6]}".$br;
         $string.="&nbsp;&nbsp;／".$br;
-        $string.="{$arr[7]}".$br.$br;
-        return $string;
+		$string.="{$nums[7]}".$br.$br;
+		
+        echo  $string;
 	 }
 
 	
@@ -55,11 +56,11 @@
 			$parent=floor(($i-1)/2);//葉もしくは枝要素の親の値
 
 			if ($nums[$i]<$nums[$parent]) {//葉もしくは枝要素が親よりも小さい場合
-				echo_tree($arr);
 				echo '<br>'.$nums[$i].'と'.$nums[$parent].'を入れ替え'.'<br>';
 				$tmp=$nums[$parent];
 				$nums[$parent]=$nums[$i];
 				$nums[$i]=$tmp;
+				echo_tree($nums);
 			}
 		}
 
