@@ -56,12 +56,19 @@
 
 	mergesort($numbers);
 
+	echo '<br>'.'【ソート後】'.'<br>';
+	foreach ($numbers as $key) {
+		echo $key.'&nbsp';
+	}
+	echo '<br>';
+	
 	function mergesort(&$numbers)
 	{
 		$last=count($numbers)-1;
 		$center=floor(count($numbers)/2);
 		$left=[];
 		$right=[];
+		$work=[];
 		for ($i=0; $i <$center ; $i++) { 
 			$left[]=$numbers[$i];
 		}
@@ -77,19 +84,45 @@
 		if (count($right)>1) {
 			mergesort($right);
 		}
-		for ($k=0; $k <$last ; $k++) { 
-			if ($left[$k]>$right[$k]) {
-				echo '左【'.$left[$k].'】と右【'.$right[$k].'】を交換'.'<br>';
-				$tmp=$left[$k];
-				$left[$k]=$right[$k];
-				$right[$k]=$tmp;
-			}
-		}
+		echo '【交換前】'.'<br>';
 		echo var_dump($left).'左部分の２分割'.'<br>';
 		echo var_dump($right).'右部分の２分割'.'<br>';
-
-
-
+		for ($k=0; $k <$last ; $k++) { 
+			if ($left[$k]>$right[$k]) {
+				echo '左【'.$left[$k].'】と右【'.$right[$k].'】を比較'.'<br>';
+				echo var_dump($left).'左部分の２分割'.'<br>';
+				echo var_dump($right).'右部分の２分割'.'<br>';
+				$numbers=array_merge($left[$k],$right[$k]);
+				echo '【マージ後】'.'<br>';
+				echo var_dump($numbers).'<br>';
+			}
+			// if ($left[$k+1]>$right[$k]) {
+			// 	echo '左【'.$left[$k+1].'】と右【'.$right[$k].'】を交換'.'<br>';
+			// 	$tmp=$left[$k+1];
+			// 	$left[$k+1]=$right[$k];
+			// 	$right[$k]=$tmp;
+			// 	echo '【交換後】'.'<br>';
+			// 	echo var_dump($left).'左部分の２分割'.'<br>';
+			// 	echo var_dump($right).'右部分の２分割'.'<br>';
+			// }
+			// if ($left[$k+1]>$right[$k+1]) {
+			// 	echo '左【'.$left[$k+1].'】と右【'.$right[$k+1].'】を交換'.'<br>';
+			// 	$tmp=$left[$k+1];
+			// 	$left[$k+1]=$right[$k+1];
+			// 	$right[$k+1]=$tmp;
+			// 	echo '【交換後】'.'<br>';
+			// 	echo var_dump($left).'左部分の２分割'.'<br>';
+			// 	echo var_dump($right).'右部分の２分割'.'<br>';
+			// }
+			// if ($left[$k]>$right[$k+1]) {
+			// 	# code...
+			// }
+		}
+		
+	}
+	function echo_array()
+	{
+		# code...
 	}
 	
 
