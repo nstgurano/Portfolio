@@ -27,26 +27,24 @@
     function searchIdx($a,$ky)
     {
       $b=count($a);//
-      $index=[];
+      $index=0;
 
-      for ($i=0; $i <$b ; $i++) { //$indexの配列を$aの要素だけ用意
-        for ($i=0; $i < $b; $i++) { //$aの要素を0~$b-1だけチェック
-          if ($ky!==$a[$i]) {//$aの配列の中に$kyがあれば$indexに挿入,
-            continue;
+      for ($i=0; $i <$b ; $i++) { //$aの要素を抽出
+          if ($ky===$a[$i]) {
+              echo 'その値は['.$i.']にあります。'.'<br>';
+              $index++;
           }else{
-            $index[]=$i;
+            continue;//なければスキップ
           }
-        }
       }
 
-    if(empty($index)) {
+    if($index===0) {
         echo 'その値はないです。';
     }else {
-      foreach ($index as $key) {
-        echo 'その値は['.$key.']にあります。';
+        echo $ky.'は'.$index.'個あります';
       }
     }
-   }
+   
     
     
 ?>
