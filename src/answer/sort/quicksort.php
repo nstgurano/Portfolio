@@ -8,8 +8,8 @@
 <body>
 
   <?php
-    $a = range(0,20);
-    shuffle($a);
+    $a =range(0,10);// [10,3,1,9,7,6,8,2,4,5];//
+    shuffle($a);//配列をシャッフル
     $a_last=count($a)-1;
   // クイックソートを使用して配列$aの値を小さい順番に並べて下さい。
   // 10 3 1 9 7 6 8 2 4 5
@@ -31,41 +31,41 @@
   {
     $firstpoint=$first;//左から始まる要素
     $lastpoint=$last;//右から始まる要素
-    $center=floor(($first+$last)/2);//真ん中の要素（切り捨て）
-    while ($firstpoint<=$lastpoint) {//
-      while ($a[$firstpoint]<$a[$center]) {//真ん中と左を比べて、左が小さいなら一つ右に行く
+    $pivod=$a[$firstpoint];//基準値は調べ始めの要素
+
+    if ($firstpoint>=$lastpoint) {//左と右が重なったらソート終了
+      return;
+    }
+
+    while ($firstpoint<=$lastpoint) {//左から右に探索して重なるまで続ける
+      while ($a[$firstpoint]<$pivod) {//真ん中と左を比べて、左が小さいなら一つ右に行く
           $firstpoint++;
       }
 
-      while ($a[$lastpoint]>$a[$center]) {//真ん中と右を比べて、右が小さいなら一つ左に行く
+      while ($pivod<$a[$lastpoint]) {//真ん中と右を比べて、右が小さいなら一つ左に行く
           $lastpoint--;
       }
 
 
-      if ($firstpoint<=$lastpoint) {//右と左が重なったら終了
-       //左から右の中の要素に調べる要素がある場合、以下実行
-         echo'基準値は【'.$a[$center].'】、【'. $a[$firstpoint].'】と【'.$a[$lastpoint].'】を交換します';
-        $tmp=$a[$lastpoint];
-        $a[$lastpoint]=$a[$firstpoint];
-        $a[$firstpoint]=$tmp;
-        $firstpoint++;//次の要素を確認するために左と右どちらも進む
-        $lastpoint--;
+      if ($firstpoint>=$lastpoint) {//左と右が重なったらこの中での処理は終了
+      break;
       }
-      echo '<br>';
+      echo "左の現在地は【{$firstpoint}】、右の現在地は【{$lastpoint}】".'<br>';
+      echo'基準値は【'.$pivod.'】、【'. $a[$firstpoint].'】と【'.$a[$lastpoint].'】を交換します'.'<br>';
+      $tmp=$a[$firstpoint];//以下、左の要素と右の要素の入れ替え
+      $a[$firstpoint]=$a[$lastpoint];
+      $a[$lastpoint]=$tmp;
+      $firstpoint++;//次の要素を確認するために左と右どちらも進む
+      $lastpoint--;
+
       foreach ($a as $key) {
         echo $key.'&nbsp';
       }
-
-
       echo '<br>';
-
-      if ($first<$lastpoint) {//真ん中より左の要素にソートできるものがある場合、再起処理
-        quickSort($a, $first , $lastpoint);//引数は若干ソートされたa、左端の要素、真ん中の要素
-      }
-      if ($firstpoint<$last) {//真ん中より右の要素にソートできるものがある場合、再起処理
-        quickSort($a, $firstpoint,$last);//引数は若干ソートされたa、真ん中の要素、右端の要素
-      }
     }
+
+      quickSort($a, $first , $firstpoint-1);//左の要素、左端の要素、左のポインターが進んだ
+      quickSort($a, $lastpoint+1,$last);//右の要素、右の要素の始まり、右端の要素
   }
 
   ?>
