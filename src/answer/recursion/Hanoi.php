@@ -24,12 +24,12 @@
 
 Hanoi(3,"A","B","C");
 
-function Hanoi($n, $from, $work, $dest) {
+function Hanoi($n, $from, $work, $dest) {//すべての円盤のゴールはC（dest）
   if ($n>0) {//移動させる円盤の数は0以上である、再起処理終了条件
-    Hanoi($n-1,$from,$dest,$work);//円盤の数は3枚で1枚ずつ動かす、A⇔Cへの移動、destの値（work作業用）とworkの値（dest移動先）が入れ替わる
+    Hanoi($n-1,$from,$dest,$work);//n-1分の円盤をBへ移す、destの値（work作業用）とworkの値（dest移動先）が入れ替わり、Cは作業用で使う
     echo 'Move to the disk '.$n.' from '.$from.' to '.$dest;
     echo '<br>';
-    Hanoi($n-1,$work,$from,$dest);//円盤の数は2枚だけ、A⇔Bの移動
+    Hanoi($n-1,$work,$from,$dest);//上記で動かした円盤n枚のうち一枚は必ずAに移動する必要がある、A⇔Bの移動をして、最終的にCに移動
   }
 }
 
