@@ -46,8 +46,8 @@
 	// 配列のマージが終了しました。
 	// Array ( [0] => 1 [1] => 2 [2] => 7 [3] => 8 [4] => 10 [5] => 12 [6] => 13 [7] => 16 [8] => 20 )
 	// ※上の出力はあくまで例です。ご自分でわかりやすい出力に書き換えて下さっても構いません。
-	$numbers = range(0,20);
-	shuffle($numbers);
+	$numbers = range(0,20);//０から２０まで配列で入ってる
+	shuffle($numbers);//上記をランダムにシャッフル
 
 	echo '【初期値】'.'<br>';
 	foreach ($numbers as $key) {
@@ -67,10 +67,10 @@
 	{
 		$count=count($numbers);//配列の中身の数確認
 		$last=$count-1;//配列の最後の要素
-		$center=floor(count($numbers)/2);//配列の真ん中の要素
+		$center=floor(count($numbers)/2);//配列の真ん中の要素、切り捨て
 		$left=[];//左と右にわけるために空の配列を用意
 		$right=[];
-		$br='<br>';
+		$br='<br>';//改行用
 
 		for ($i=0; $i <$center ; $i++) { //左の要素の抽出
 			$left[]=$numbers[$i];//0から真ん中まで
@@ -80,13 +80,14 @@
 		}
 
 		if (count($left)>1) {//左の要素が１つ以上あるばあい再起処理
-			mergesort($left);
+			mergesort($left);//左側のみ
 		}
 
 		if (count($right)>1) {//右の要素が１つ以上あるばあい再起処理
-			mergesort($right);
+			mergesort($right);//右側のみ
 		}
-		
+
+		///分割終了、以下左要素と右要素の比較と空の配列への代入
 		echo "【交換前】{$br}";
 		echo var_dump($left)."左部分の２分割{$br}";
 		echo var_dump($right)."右部分の２分割{$br}";
@@ -97,7 +98,7 @@
 		$rpoint=0;//右の最初
 		$result=[];//下の条件の結果を入れるための空の配列
 
-		while ($lpoint<$left_count&&$rpoint<$right_count) {//右と左で要素の数がなくならない限り以下を実行
+		while ($lpoint<$left_count&&$rpoint<$right_count) {//右と左で比較後に代入する要素の数がなくならない限り以下を実行
 			if ($left[$lpoint]<$right[$rpoint]) {//左のほうが小さい
 				$result[]=$left[$lpoint];//結果に左の要素を入れる
 				$lpoint++;//左の要素は次の要素に進む
@@ -106,16 +107,17 @@
 				$rpoint++;//右の要素は次の要素に進む
 			}
 		}
+		//以下、上記の処理が終えて、のこった要素を代入
 		while ($lpoint<$left_count) {//右の要素がなくなり左だけ残っていた場合
-			$result[]=$left[$lpoint];//残りの要素を結果に入れる
-			$lpoint++;//隣に移る
+			$result[]=$left[$lpoint];
+			$lpoint++;//左隣に移る
 		}
 		while ($rpoint<$right_count) {//左の要素がなくなり右だけ残っていた場合
-			$result[]=$right[$rpoint];//残りの要素をすべて結果に入れる
-			$rpoint++;//隣に移る
+			$result[]=$right[$rpoint];
+			$rpoint++;//右隣に移る
 		}
 
-		 echo '【マージ後】'.'<br>';
+		 echo "【マージ後】{$br}";
 		 $numbers=$result;//上書き
 		 echo var_dump($numbers).'<br>';
 		}
