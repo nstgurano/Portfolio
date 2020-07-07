@@ -39,19 +39,19 @@
   $c = range($a, $b);//昇順の数を指定
   $request=15;//探す値
 
-  $first=0;//$cの最初の値
-  $last=count($c)-1;//$cの最後の値
+  $first=0;//$cの配列の最初の要素
+  $last=count($c)-1;//$cの最後の要素
   $index=null;//探す値のキー
 
 
   while ($first<=$last) {//最初の値と最後の値の中に探す値があるときに繰り返す
-    $center=floor(($last+$first)/2);//真ん中の数値
+    $center=floor(($last+$first)/2);//真ん中の数値、切り捨て
     echo '['.$a.']'.'が左端の番号です。'.'['.$center.']'.'が真ん中の番号です。'.'['.$b.']'.'が左端の番号です。';
     echo '<br>';
     echo $c[$center].'と'.$request.'を比較します'.'<br>';
     if ($c[$center]==$request) {//真ん中の数値と探す数値が一緒
       echo '一致しました。終了します。'.'<br>';
-      $index=$center;
+      $index=$center;//キーの上書き
       break;
     }elseif ($c[$center]<$request) {//探す数値より真ん中の数値のほうが小さい
       echo '一致しません'.'<br>';
