@@ -24,9 +24,9 @@
 
 Hanoi(3,"A","B","C");
 
-function Hanoi($n, $from, $work, $dest) {//上記のコメントアウトの通りの変数設定
+function Hanoi($n, $from, $work, $dest) {
   if ($n>0) {//移動させる円盤の数は0以上である、再起処理終了条件
-    Hanoi($n-1,$from,$dest,$work);//destとworkがn=1になるまで入れ替わっていく、A→Cへの移動
+    Hanoi($n-1,$from,$dest,$work);//円盤の数は3枚で1枚ずつ動かす、A⇔Cへの移動、destの値（work作業用）とworkの値（dest移動先）が入れ替わる
     echo 'Move to the disk '.$n.' from '.$from.' to '.$dest;
     echo '<br>';
     Hanoi($n-1,$work,$from,$dest);//円盤の数は2枚だけ、A⇔Bの移動
