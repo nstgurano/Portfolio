@@ -52,11 +52,11 @@
 	
 	function heap(&$arr,$nums,$countNums)//$arrは参照渡し、
 	{
-		for ($i=$countNums; 0<=$i; $i--) {//配列の最後の要素から検索
-			$parent=floor(($i-1)/2);//葉もしくは枝要素の親の値を定義
+		for ($i=$countNums; 0<=$i; $i--) {//配列の最後の要素から検索、$iは葉もしくは枝要素
+			$parent=floor(($i-1)/2);//葉もしくは枝要素の親の要素を定義
 
 			if ($nums[$i]<$nums[$parent]) {//葉もしくは枝要素が、親よりも小さい場合
-				echo '<br>'.$nums[$i].'と'.$nums[$parent].'を入れ替え'.'<br>';
+				echo "'<br>'.$nums[$i].'と'.$nums[$parent].'を入れ替え'.'<br>'";
 				$tmp=$nums[$parent];
 				$nums[$parent]=$nums[$i];
 				$nums[$i]=$tmp;
@@ -65,9 +65,9 @@
 		}
 
 		$arr[]=array_shift($nums);//$numsの中の始めの要素を取り出す
-		$countNums -=1;//始めの要素を取り出し一つ要素が少なくなったので、－１をして後ろから見て次の値に進む
+		$countNums -=1;//始めの要素を取り出し一つ要素が少なくなったので、－１をして次の値に進む
 
-		if ($countNums>=0) {//要素を０まで調べ終わったら再起処理
+		if ($countNums>=0) {//要素が０になるまで、以下の再起処理
 			heap($arr,$nums,$countNums);
 		}
 	}
