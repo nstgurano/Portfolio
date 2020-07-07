@@ -20,23 +20,23 @@
     // その値はないです。
 
     $a = array(1,9,2,9,4,6,7,9);
-    $ky = 9;
+    $ky = 9;//探す値
 
-    searchIdx($a, $ky,$index);
+    searchIdx($a, $ky);
 
     function searchIdx($a,$ky)
     {
-      $b=count($a);//
-      $index=0;
+      $b=count($a);//配列の要素数確認
+      $index=0;//探す値があった場合のカウント用
 
       for ($i=0; $i <$b ; $i++) { //$aの要素を抽出
-          if ($ky===$a[$i]) {
+          if ($ky===$a[$i]) {//探す値があったとき
               echo 'その値は['.$i.']にあります。'.'<br>';
-              $index++;
+              $index++;//カウント１する
           }
       }
 
-    if($index===0) {
+    if($index===0) {//カウントがゼロのままであるか
         echo 'その値はないです。';
     }else {
         echo $ky.'は'.$index.'個あります';
