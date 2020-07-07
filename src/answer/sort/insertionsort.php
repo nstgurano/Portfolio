@@ -19,7 +19,7 @@
   // 5 6 9 1 2
   // 上のように実行の過程も表示してください。
   $a = array(9,6,5,1,2);
-  $b=count($a);
+  $b=count($a);//
   insertion($a,$b);
 
   function insertion($a,$b)
@@ -31,20 +31,21 @@
     }
     echo '<br>';
 
-    for ($i=1; $i <$b ; $i++) { 
-      $tmp=$a[$i];
-      for ($x=$i-1; 0<=$x ; $x--) { 
-        if ($tmp<$a[$x]) {
-          $a[$x+1]=$a[$x];
+    for ($i=1; $i <$b ; $i++) {//初期値は１番目で最後の要素まで調べる
+      $tmp=$a[$i];//調べた要素を保存
+      for ($x=$i-1; 0<=$x ; $x--) {//初期値から一つずつ左に戻っていく
+        echo  "【{$tmp}】と【{$a[$x]}】を比較します".'<br>';
+        if ($tmp<$a[$x]) {//保存した値のほうが小さいならば交換
+          echo '<br>'."【{$tmp}】と【{$a[$x]}】を交換".'<br>';
+          $a[$x+1]=$a[$x];//比較したものと交換する
+          $a[$x]=$tmp;
+          var_dump($a);//交換できたか確認
         }else{
-          break;
+          break;//交換するものがなければ処理は終了
         }
-      }
-      $a[$x+1]=$tmp;
-      
-      echo'<br>';
-      echo $a[$i].'と'.$a[$key].'を交換します';
-      echo '<br>';
+      } 
+
+      echo '【交換後】'.'<br>';
       foreach ($a as $key) {
         echo $key.'&nbsp';
       }
