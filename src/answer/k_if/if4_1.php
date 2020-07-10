@@ -15,6 +15,24 @@
     // が2の場合は「小吉です。」
     // それ以外の場合(default)は「末吉です。」
     // とechoしてください。
+    
+    // 直接echoする場合
+    $randomNumber=rand(0,3);
+    switch($randomNumber){
+        case 0:
+            echo "大吉です。";
+            break;
+        case 1:
+            echo "中吉です。";
+            break;
+        case 2:
+            echo "小吉です。";
+            break;
+        default:
+            echo "末吉です。";
+            break;
+    }
+    
   ?>
 
 </body>
