@@ -42,10 +42,11 @@ $x_count=count($maze[0]);//横軸がどこまであるか確認※１行目だ�
 //////////////スタートの位置探し
 $start=start_search($maze,$y_count,$x_count);
 echo '【初期値迷路】'.$br;
+echo "スタートは【{$start[0]},{$start[1]}】です".$br;
 foreach ($maze_data as $maze_value) {
   echo $maze_value.$br;
 }
-echo "スタートは【{$start[0]},{$start[1]}】です".$br;
+
 
 
 ////////////ゴール探し
@@ -72,8 +73,7 @@ function search_goal(&$maze,$y,$x){//
 
   $y_count=count($maze);//縦軸がどこまであるか確認
   $x_count=count($maze[0]);//横軸がどこまであるか確認※１行目だけ確認
-
-
+  $current_yx=[$y,$x];
 
   if ($maze[$y][$x]==='X'||$x_count-1<$x||$x<0||$y_count-1<$y||$y<0||$maze[$y][$x]==='1') {//進めない条件、壁・１があるとき、壁が横・縦を超えないとき、
     return;
@@ -85,7 +85,7 @@ function search_goal(&$maze,$y,$x){//
     $maze[$y][$x]='1';
   }
 
-  echo "現在地は【{$y},{$x}】です".'<br>';
+  echo '<br>'."現在地は【{$y},{$x}】です".'<br>';
   foreach ($maze as $maze_value) {//配列から迷路を再度作成
     echo implode(',',$maze_value).'<br>';
   }
