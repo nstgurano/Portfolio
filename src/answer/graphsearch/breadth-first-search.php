@@ -42,16 +42,18 @@ $x_count=count($maze[0]);//横軸がどこまであるか確認※１行目だ�
 //////////////スタートの位置探し
 $start=start_search($maze,$y_count,$x_count);
 echo '【初期値迷路】'.$br;
+echo "スタートは【{$start[0]},{$start[1]}】です".$br;
 foreach ($maze_data as $maze_value) {
   echo $maze_value.$br;
 }
-echo "スタートは【{$start[0]},{$start[1]}】です".$br;
+
 
 
 ////////////ゴール探し
 $y=$start[0];//縦の現在地
 $x=$start[1];//横の現在地
-search_goal($maze,$y,$x);
+$current_yx=[$y,$x];
+search_goal($maze,$current_yx,$y,$x,$y_count,$x_count);
 
 
 
@@ -67,33 +69,46 @@ function start_search ($maze,$y_count,$x_count){//
   }
 }
 
-
-function search_goal(&$maze,$y,$x){//
-
-  $y_count=count($maze);//縦軸がどこまであるか確認
-  $x_count=count($maze[0]);//横軸がどこまであるか確認※１行目だけ確認
-
-
-
-  if ($maze[$y][$x]==='X'||$x_count-1<$x||$x<0||$y_count-1<$y||$y<0||$maze[$y][$x]==='1') {//進めない条件、壁・１があるとき、壁が横・縦を超えないとき、
+function search($maze,&$current_yx,$y,$x,$y_count,$x_count)//進行候補を決める関数、$current_yxは参照渡し
+{
+    if ($maze[$y][$x]==='X'||$x_count-1<$x||$x<0||$y_count-1<$y||$y<0||$maze[$y][$x]==='1'||$maze[$y][$x]==='G') {//進めない条件
     return;
-  }
+    }
+  
+    if ($maze[$y][$x+1]==='0') {//右に進む
+      array_push($current_yx,$y,$x+1);//進む候補地を配列の最後に入れる
+    }
+    if ($maze[$y][$x-1]==='0') {//左に進む
+      array_push($current_yx,$y,$x-1);
+    }
+    if ($maze[$y-1][$x]==='0') {//上に進む
+      array_push($current_yx,$y-1,$x);
+    }
+    if ($maze[$y+1][$x]==='0') {//下に進む
+      array_push($current_yx,$y+1,$x);
+    }
 
-  if ($maze[$y][$x]==='0') {//進んだところは０→１に変える
-    $maze[$y][$x]='1';
-  }
-  if ($maze[$y][$x]==='G') {//ゴールの場合、終了
-    return;
-  }
+}
 
-  echo "現在地は【{$y},{$x}】です".'<br>';
-  foreach ($maze as $maze_value) {//配列から迷路を再度作成
-    echo implode(',',$maze_value).'<br>';
+
+function search_goal(&$maze,$current_yx,$y,$x,$y_count,$x_count){//ゴールを探す関数、$mazeは参照渡し
+
+  while (!empty($current_yx)) {//進む候補地がなくなるまでループ
+    search($maze,$current_yx,$y,$x,$y_count,$x_count);
+    $y=array_shift($current_yx);//縦軸の進む候補地の配列の最初の要素を取り出す
+    $x=array_shift($current_yx);//横軸の進む候補地の配列の最初の要素を取り出す
+    if ($maze[$y][$x]==='0') {//進めるのであれば0→1に変える
+      $maze[$y][$x]=1;
+      echo '<br>'."現在地は【{$y},{$x}】です".'<br>';
+      foreach ($maze as $maze_value) {//配列から迷路を再度作成
+        echo implode(',',$maze_value).'<br>';
+      }
+    }elseif ($maze[$y][$x]==='S') {//スタートはスキップ
+      continue;//
+    }elseif ($maze[$y][$x]==='1') {//進んだところもスキップ
+      continue;
+    }
   }
-  search_goal($maze,$y,$x+1);//右に進む
-  search_goal($maze,$y,$x-1);//左に進む
-  search_goal($maze,$y-1,$x);//上に進む
-  search_goal($maze,$y+1,$x);//下に進む
 }
 
 ?>
