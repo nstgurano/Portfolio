@@ -22,26 +22,38 @@
  # 辺の配列（起点、終点、コストの配列）
 $edges = [
   [0, 1, 4], [0, 2, 3], [1, 2, 1], [1, 3, 1],
-  [1, 4, 5], [2, 5, 2], [4, 6, 2], [5, 4, 1],
+  [1, 4, 5], [2, 5, 2], [4, 6, -2], [5, 4, 1],
   [5, 6, 4]
 ];
 
-var_dump(bellman_ford($edges, 7));
+bellman_ford($edges, 7);
 function bellman_ford($edges, $num_v){
-  $min_num=INF;//各頂点の初期値
-  $result=[];//結果を比較するための配列
-  $result[0][0]=0;//最初の起点の初期値は0
 
-  for ($i=0; $i < $num_v; $i++) { //頂点分の配列を用意
-    array_push($result,[$min_num,false]);
-    foreach ($result as $key => $value) {
-      if ($edges[$i][2]<$result[$edges[$i][1]]) {
-        $result[$i][1]=$edges[$i][2];
+  $cost=[];
+  $flg_update=false;
+
+  for ($i=0; $i < $num_v; $i++) { //頂点の数-1分の配列を用意
+    $cost[$i]=INF;//各頂点の初期値は無限大
+  }
+  $cost[0]=0;//始点のコストの初期化
+
+
+  while ($flg_update===false) {//すべての頂点と辺の数分まで調べ続ける
+    for ($i=0; $i <$num_v ; $i++) { //頂点の数分確認
+      for ($j=0; $j < count($edges); $j++) { //辺の数だけ確認
+        if ($cost[$edges[$j][0]]!==INF&&$cost[$edges[$j][1]]>$cost[$edges[$j][0]]+$edges[$j][2]) {//コストの初期値が更新されている場合かつ、始点よりも終点のコストのほうが大きい場合
+          echo  "頂点【".$edges[$j][0]."】のコスト【".$cost[$edges[$j][1]]."】に【".$cost[$edges[$j][0]]."】と【".$edges[$j][2]."】を足して更新".'<br>';
+          $cost[$edges[$j][1]]=$cost[$edges[$j][0]]+$edges[$j][2];//出発地点のコストを終点のコストに更新
+        }
       }
+      if ($i===$num_v-1) {//頂点-1だけループを回したら検索終了、負の閉路も検出し更新され続けたらループを止める
+        $flg_update=true;//フラグを切り替え更新終了
+        }
     }
-  
+  }
+  echo "〈始点【0】から各頂点への最短経路〉<br>";
+  var_dump($cost);
 
-  var_dump($result);
 }
 
 
