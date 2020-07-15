@@ -32,20 +32,22 @@ $edges = [
 
 function dijkstra($edges, $num_v){
   $cost=[];//各頂点でのコストを入れるための空の配列
+  $flg=[];
 
   for ($i=0; $i < $num_v; $i++) {//頂点の数だけ配列を用意
     $cost[$i]=INF;//最小値を探すため各頂点の初期値は無限大
+    $flg[$i]=false;
   }
   $cost[0]=0;//始点である0はコスト0
 
-  $update_points=[];//未調査の空の配列
   $min_num=null;//最小値
   foreach ($edges as $edges_key) {
     for ($j=0; $j <$num_v ; $j++) {//頂点の数
       for ($k=0; $k < count($edges_key); $k++) {//辺の数
-        // if ($cost[$edges_key[$k][0]]>$cost[$k]+$edges_key[$k][1]) {//始点よりも終点のコストのほうが大きい場合
+        if ($cost[$edges_key[$k][0]]>$cost[$k]+$edges_key[$k][1]) {//始点よりも終点のコストのほうが大きい場合
           $cost[$edges[$k][0]]=$cost[$edges[$k][1]]+$cost[$j];//出発地点のコストを終点のコストに更新
-        // }
+          //$flg[$edges[$k][0]]=true;
+        }
       }
     }
   }
