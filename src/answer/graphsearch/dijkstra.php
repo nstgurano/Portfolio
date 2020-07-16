@@ -32,28 +32,38 @@ $edges = [
 
 function dijkstra($edges, $num_v){
   $cost=[];//各頂点でのコストを入れるための空の配列
-  $flg=[];
+  $flg=[];//各頂点での確定、未確定のフラグを入れるための空の配列
 
   for ($i=0; $i < $num_v; $i++) {//頂点の数だけ配列を用意
     $cost[$i]=INF;//最小値を探すため各頂点の初期値は無限大
-    $flg[$i]=false;
+    $flg[$i]=FALSE;//初期値はすべてfalse
   }
   $cost[0]=0;//始点である0はコスト0
 
-  $min_num=null;//最小値
-  foreach ($edges as $edges_key) {
+  while(TRUE){//ブレイクされるまでループ
+    $min=INF;//最小値はINF
+    $min_index=0;//始点は0から
     for ($j=0; $j <$num_v ; $j++) {//頂点の数
-      for ($k=0; $k < count($edges_key); $k++) {//辺の数
-        if ($cost[$edges_key[$k][0]]>$cost[$k]+$edges_key[$k][1]) {//始点よりも終点のコストのほうが大きい場合
-          $cost[$edges[$k][0]]=$cost[$edges[$k][1]]+$cost[$j];//出発地点のコストを終点のコストに更新
-          //$flg[$edges[$k][0]]=true;
-        }
+      if ($cost[$j]<$min&&$flg[$j]===FALSE) {//最小値よりもコストのほうが小さいかつ、フラグが未確定
+        $min=$cost[$j];//最小値更新
+        $min_index=$j;//配列番号の更新
+      }
+    }
+    $flg[$min_index]=TRUE;//最小値を確定させる
+    $check_flg=array_search(FALSE,$flg);//flgの中からFALSEを確認
+    if ($check_flg===FALSE) {//すべてがtrueに更新されたらブレイク
+      break;
+    }
+    
+    for ($k=0; $k <count($edges[$min_index]) ; $k++) {//辺の中身を確認
+      if (($cost[$min_index]+$edges[$min_index][$k][1])<$cost[$edges[$min_index][$k][0]]) {//始点のほうが終点より小さい場合
+        $cost[$edges[$min_index][$k][0]]=($cost[$min_index]+$edges[$min_index][$k][1]);//終点のコストに出発地点のコストを更新
       }
     }
   }
-
+  return var_dump($cost);
 }
-var_dump(dijkstra($edges, 7));
+dijkstra($edges, 7);
 
 ?>
 
