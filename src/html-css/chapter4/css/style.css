@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+/* 共通部分 
+--------------------*/
+
+html{
+    font-size: 100%;
+}
+body{
+    font-family: "Yu Gothic medium", "游ゴシック Medium", YuGothic ,"游ゴシック体", "ヒラギノ角ゴ Pro W3", sans-serif;
+    line-height: 1.7;
+    color: #432;
+}
+
+a{
+    text-decoration: none;;
+}
+img{
+    max-width: 100%;
+}
+
+
+/*HEADER
+-------------------- */
+.wrapper{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 4%;
+}
+.logo{
+    width: 210px;
+    margin-top: 14px;
+}
+
+.main-navi{
+    display: flex;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    margin-top: 34px;
+    list-style: none;
+}
+
+.main-navi li{
+    margin-left: 36px;
+}
+.main-navi a{
+    color: #432;
+}
+.main-navi a:hover{
+    color: #0bd;
+}
+.page-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 大きな背景画像 
+--------------------*/
+.big-bg{
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+/*HOME
+--------------------*/
+#home{
+    background-image:url(../img/main-bg.jpg);
+    min-height: 100vh;
+}
+#home .page-title{
+    text-transform: none;
+}
+.home-content{
+    text-align: center;
+    margin-top: 10%;
+}
+.home-content p{
+    font-size: 1.125rem;
+    margin: 10px 0 42px;
+}
+
+/* 以下、背景変える用ののCSS*/
+/* 背景画像の色変更、青が前面の明るい色合い*/
+/* #home{
+    background-image:url(../img/main-bg.jpg);
+    background-color: #0bd;
+    background-blend-mode: hard-light;
+    min-height: 100vh;
+} */
+/*  背景画像のグラデーション*/
+/* #home{
+    background-image: linear-gradient(#c9ffbf,#ffafbd) ;
+    min-height: 100vh;
+} */
+/*  背景画像のグラデーション別パターン*/
+#home{
+    background-image:url(../img/main-bg.jpg),linear-gradient(#c9ffbf,#ffafbd);
+    background-blend-mode: luminosity;
+    min-height: 100vh;
+}
+
+
+/*見出し
+--------------------*/
+.page-title{
+    font-size: 5rem;
+    font-family: 'Phirosopher',serif;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+/* ボタン
+--------------------*/
+.button{
+    font-size: 1.375rem;
+    background-color: #0bd;
+    color: #fff;
+    border-radius: 5px;
+    padding: 18px 32px;
+}
+.button:hover{
+    background-color: #0090aa;
+}
