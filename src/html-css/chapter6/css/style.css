@@ -195,7 +195,7 @@ article p{
 ------------------ */
 #menu{
     background-image: url(../img/menu-bg.jpg);
-    min-width: 100vh;
+    min-height: 100vh;
 }
 
 .menu-content{
@@ -213,7 +213,7 @@ article p{
 .grid{
     display: grid;
     gap: 26px;
-    grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     margin-top: 6%;
     margin-bottom: 50px;
 }
@@ -337,12 +337,5 @@ footer p{
     /* MENU */
     .menu-content{
         margin-top: 20%;
-    }
-    .big-box{
-        grid-column: auto;
-        grid-row: auto;
-    }
-    .big-box img{
-        height: 100%;
     }
 }
