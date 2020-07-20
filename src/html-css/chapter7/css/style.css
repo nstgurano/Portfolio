@@ -418,7 +418,7 @@ footer p{
         height: 100%;
     }
     /* CONTACT */
-    #contact ,.page-title{
+    #contact .page-title{
         margin-top: 40px;
     }
     /* フォーム */
@@ -434,6 +434,9 @@ footer p{
     }
     .location-info,
     .location-map,
+    .sns-box{
+        width: 100%;
+    }
     .sns-box{
         margin-bottom: 30px;
     }
