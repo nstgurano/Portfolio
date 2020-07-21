@@ -23,7 +23,6 @@ foreach ($result as $key) {
 function primeNumber($int)
 {
   $array=[];
-
   for ($i=2; $i <=$int ; $i++) { 
     $k=true;
     for ($j=2; $j <$i ; $j++) { 
@@ -37,13 +36,12 @@ function primeNumber($int)
       $array[]=$i;
     }
   }
- return $array;
+  return $array;
 }
 
 function separateInt($prime,$int)
 {
   $num=[];
-
   while ($int!==1) {
   foreach ($prime as $key) {
     if ($int%$key===0) {
@@ -51,7 +49,6 @@ function separateInt($prime,$int)
       $int/=$key;
     }
   }
-
 }
   return $num;
 }
