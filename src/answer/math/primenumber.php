@@ -15,18 +15,15 @@
     for ($i=2; $i <=100 ; $i++) { 
       $k=true;
       for ($j=2; $j <$i ; $j++) { 
-        if ($i===2) {
-          $array[]=2;
-        }elseif($i%$j==0) {
+        if($i%$j==0) {
           $k=false;
         }
-
       }
       if ($k===true) {
         $array[]=$i;
       }
     }
-    echo '1~100までの素数は'.count($array).'個あります。';
+    echo '1~100までの素数は'.count($array).'個あります。'.'<br>';
     foreach ($array as $key) {
       echo $key.'&nbsp';
     }
