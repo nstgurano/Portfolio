@@ -120,7 +120,7 @@
 		 echo "【マージ後】{$br}";
 		 $numbers=$result;//上書き
 		 echo var_dump($numbers).'<br>';
-		}
+	}
 
 
 
