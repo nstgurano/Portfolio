@@ -76,16 +76,16 @@ function search($maze,&$current_yx,$y,$x,$y_count,$x_count)//進行候補を決�
     }
   
     if ($maze[$y][$x+1]==='0') {//右に進む
-      array_push($current_yx,$y,$x+1);//進む候補地を配列の最後に入れる
+      array_push($current_yx,[$y,$x+1]);//進む候補地を配列の最後に入れる
     }
     if ($maze[$y][$x-1]==='0') {//左に進む
-      array_push($current_yx,$y,$x-1);
+      array_push($current_yx,[$y,$x-1]);
     }
     if ($maze[$y-1][$x]==='0') {//上に進む
-      array_push($current_yx,$y-1,$x);
+      array_push($current_yx,[$y-1,$x]);
     }
     if ($maze[$y+1][$x]==='0') {//下に進む
-      array_push($current_yx,$y+1,$x);
+      array_push($current_yx,[$y+1,$x]);
     }
 
 }
@@ -95,8 +95,10 @@ function search_goal(&$maze,$current_yx,$y,$x,$y_count,$x_count){//ゴールを�
 
   while (!empty($current_yx)) {//進む候補地がなくなるまでループ
     search($maze,$current_yx,$y,$x,$y_count,$x_count);
-    $y=array_shift($current_yx);//縦軸の進む候補地の配列の最初の要素を取り出す
-    $x=array_shift($current_yx);//横軸の進む候補地の配列の最初の要素を取り出す
+    $check_node=array_shift($current_yx);
+    $y=$current_yx[0][0];//縦軸の進む候補地の配列の最初の要素を取り出す
+    $x=$current_yx[0][1];//横軸の進む候補地の配列の最初の要素を取り出す
+
     if ($maze[$y][$x]==='0') {//進めるのであれば0→1に変える
       $maze[$y][$x]=1;
       echo '<br>'."現在地は【{$y},{$x}】です".'<br>';
