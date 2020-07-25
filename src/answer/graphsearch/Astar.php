@@ -71,11 +71,12 @@
     }
 
 
-    function M_dist($goal_node,$min_list)//マンハッタン距離
+    function M_dist($goal_node,$min_list)//
     {
-      $y_dist=abs($goal_node[0]-$min_list[0]);
-      $x_dist=abs($goal_node[1]-$min_list[1]);
-      return $y_dist+$x_dist;
+      $y_dist=abs($goal_node[0]-$min_list[0]);//縦の距離、ヒューリスティックコスト算出
+      $x_dist=abs($goal_node[1]-$min_list[1]);//横の距離
+      $cost=$y_dist+$x_dist;
+      var_dump($cost);
     }
 
     function search_node($maze,&$open_list,$check_node,$x_count,$y_count)//隣接ノードを検索し、進めるものがあれば更新
@@ -109,12 +110,13 @@
       $check_node=[];
 
 
-      // for ($y=0; $y < $y_count; $y++) {
-      //   for ($x=0; $x <$x_count ; $x++) {
-      //     $Heuristic[$y][$x]=INF;//ヒューリスティックコストの初期化
-      //     $total_cost[$y][$x]=INF;//合計値の初期化
-      //   }
-      // }
+      for ($y=0; $y < $y_count; $y++) {
+        for ($x=0; $x <$x_count ; $x++) {
+          $Heuristic[$y][$x]=INF;//ヒューリスティックコストの初期化
+          $total_cost[$y][$x]=INF;//合計値の初期化
+        }
+      }
+      var_dump($Heuristic);
       $open_list[]=$start_node;//オープンリストにスタートノードを入れる
       $y=$open_list[0][0];//横軸
       $x=$open_list[0][1];//縦軸
@@ -125,7 +127,7 @@
         $check_node=array_shift($open_list);//最小値を保存
         $close_list[]=$check_node;//探索済みリストにも入れる
         search_node($maze,$open_list,$check_node,$x_count,$y_count);//最小値をもとに探索候補探し
-        var_dump($open_list);
+        
       }
     }
   
