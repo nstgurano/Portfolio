@@ -73,6 +73,7 @@
 
     function M_dist($goal_node,$min_list)//
     {
+      
       $y_dist=abs($goal_node[0]-$min_list[0]);//縦の距離、ヒューリスティックコスト算出
       $x_dist=abs($goal_node[1]-$min_list[1]);//横の距離
       $cost=$y_dist+$x_dist;
@@ -108,12 +109,14 @@
       $close_list=[];
       $Heuristic=[];
       $check_node=[];
+      $node_cost=[];
 
 
       for ($y=0; $y < $y_count; $y++) {
         for ($x=0; $x <$x_count ; $x++) {
           $Heuristic[$y][$x]=INF;//ヒューリスティックコストの初期化
           $total_cost[$y][$x]=INF;//合計値の初期化
+          
         }
       }
       var_dump($Heuristic);
