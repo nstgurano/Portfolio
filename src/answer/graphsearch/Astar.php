@@ -31,7 +31,7 @@
     // 迷路データ
     
     $maze=[
-        ["0","X","S","0","X","0"],
+        ["1","X","S","0","X","0"],
         ["0","G","X","0","0","0"],
         ["X","0","0","X","0","0"],
         ["X","X","0","0","0","X"]
@@ -51,8 +51,7 @@
       }
       echo $br;
     }
-    $Heuristic=M_dist($goal_node,$start_node);//
-    //search_node($maze,$current_yx,$x,$y,$x_count,$y_count);
+
 
     var_dump(Astar($maze,$goal_node,$start_node,$x_count,$y_count));
 
@@ -68,16 +67,6 @@
           }
         }
       }
-    }
-
-
-    function M_dist($goal_node,$min_list)//
-    {
-      
-      $y_dist=abs($goal_node[0]-$min_list[0]);//縦の距離、ヒューリスティックコスト算出
-      $x_dist=abs($goal_node[1]-$min_list[1]);//横の距離
-      $cost=$y_dist+$x_dist;
-      var_dump($cost);
     }
 
     function search_node($maze,&$open_list,$check_node,$x_count,$y_count)//隣接ノードを検索し、進めるものがあれば更新
@@ -102,6 +91,24 @@
       }
     }
 
+    function total_cost($maze,$goal_node,$open_list,&$total_cost)//
+    {
+      $open_y=$open_list[0][0];//現在地のx軸
+      $open_x=$open_list[0][1];//現在地のy軸
+      $y_dist=abs($goal_node[0]-$open_y);//縦の距離
+      $x_dist=abs($goal_node[1]-$open_x);//横の距離
+      $h_cost=$y_dist+$x_dist;//ヒューリスティックコスト
+      if ($maze[$open_y][$open_x]==='0') {
+        $node_cost=1;//ノード間コスト
+     }elseif($maze[$open_y][$open_x]==='S'){
+        $node_cost=0;//ノード間コスト
+     }
+      if ($h_cost+$node_cost<$total_cost[$open_y][$open_x]) {//トータルコストがヒューリスティックコストとノード間コストを足したものよりも大きければ更新
+        $total_cost[$open_y][$open_x]=$h_cost+$node_cost;//ヒューリスティックコスト＋ノード間コスト＝トータルコスト
+        return;
+      }
+    }
+
     function Astar(&$maze,$goal_node,$start_node,$x_count,$y_count)
     {
       $total_cost=[];
@@ -111,29 +118,35 @@
       $check_node=[];
       $node_cost=[];
 
-
       for ($y=0; $y < $y_count; $y++) {
         for ($x=0; $x <$x_count ; $x++) {
-          $Heuristic[$y][$x]=INF;//ヒューリスティックコストの初期化
           $total_cost[$y][$x]=INF;//合計値の初期化
-          
         }
       }
-      var_dump($Heuristic);
+
+      //var_dump($Heuristic);
       $open_list[]=$start_node;//オープンリストにスタートノードを入れる
+      //var_dump($open_list);
       $y=$open_list[0][0];//横軸
       $x=$open_list[0][1];//縦軸
       //以下からループに入る
       if ($maze[$y][$x]==="G") {//オープンリストの最初の値がゴールだったら終了
         echo "ゴールしました";
       }else{
-        $check_node=array_shift($open_list);//最小値を保存
-        $close_list[]=$check_node;//探索済みリストにも入れる
-        search_node($maze,$open_list,$check_node,$x_count,$y_count);//最小値をもとに探索候補探し
-        
+        total_cost($maze,$goal_node,$open_list,$total_cost);
+        var_dump($total_cost);
+        echo min($total_cost[0]);
+        // $check_node=array_shift($open_list);//最小値を保存
+        // $close_list[]=$check_node;//探索済みリストにも入れる
+        // search_node($maze,$open_list,$check_node,$x_count,$y_count);//最小値をもとに探索候補探し
       }
     }
-  
+  //   $maze=[
+  //     ["0","X","S","0","X","0"],
+  //     ["0","G","X","0","0","0"],
+  //     ["X","0","0","X","0","0"],
+  //     ["X","X","0","0","0","X"]
+  // ];
     
 //    $maze=[
 //        ["S","X","0","0","0","0","0","0"],
