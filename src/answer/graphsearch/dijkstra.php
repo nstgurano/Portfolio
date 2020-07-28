@@ -57,6 +57,7 @@ function dijkstra($edges, $num_v){
     
     for ($k=0; $k <count($edges[$min_index]) ; $k++) {//辺の中身を確認
       if (($cost[$min_index]+$edges[$min_index][$k][1])<$cost[$edges[$min_index][$k][0]]) {//始点のほうが終点より小さい場合
+        echo "頂点{$min_index}に{$cost[$edges[$min_index][$k][0]]}に{$cost[$min_index]}と{$edges[$min_index][$k][1]}を足して更新<br>";
         $cost[$edges[$min_index][$k][0]]=($cost[$min_index]+$edges[$min_index][$k][1]);//終点のコストに出発地点のコストを更新
       }
     }
