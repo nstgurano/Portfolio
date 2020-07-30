@@ -67,31 +67,6 @@
     }
 
 
-    function total_cost($maze,$goal_node,$open_list,&$total_cost)//
-    {
-      $check_node=[];//探索候補が複数ある場合に一つ一つ確認するための空の配列
-      for ($i=0; $i < count($open_list); $i++) {//探索候補の分だけ検索する
-        $check_node=$open_list[$i];//探索候補を一つ一つ計算していくために代入
-        $open_y=$check_node[0];//探索候補の縦軸
-        $open_x=$check_node[1];//探索候補の横軸
-
-        $y_dist=abs($goal_node[0]-$open_y);//ゴールの縦軸から探索候補の縦軸を引いた縦距離の差
-        $x_dist=abs($goal_node[1]-$open_x);//ゴールの横軸から探索候補の横軸を引いたの横距離の差
-        $h_cost=$y_dist+$x_dist;//ヒューリスティックコストの算出
-
-        if ($maze[$open_y][$open_x]==='0') {
-          $node_cost=1;//ノード間コスト
-        }elseif($maze[$open_y][$open_x]==='S'){
-          $node_cost=0;//ノード間コスト
-        }
-        //トータルコストがヒューリスティックコストとノード間コストを足したものよりも大きく、かつトータルコストが更新されていない場合
-        if ($h_cost+$node_cost<$total_cost[$open_y][$open_x]&&$total_cost[$open_y][$open_x]===INF) {
-          $total_cost[$open_y][$open_x]=$h_cost+$node_cost;//ヒューリスティックコスト＋ノード間コスト＝トータルコスト
-        }
-      }
-      return;//すべての探索候補の計算が終了したら終了
-    }
-
     function search_node($maze,&$open_list,$current_node,$flg,$x_count,$y_count)//隣接ノードを検索し、進めるものがあれば更新
     {
       $y=$current_node[0][0];//縦軸
@@ -116,51 +91,86 @@
 
     function check_goal($maze,$open_list,$total_cost)//探索候補の中でゴールがあればゴール判定、そうでなければトータルコストが最小のものの出力
     {
+      if (empty($open_list)) {//探索候補がなくなったらゴール判定
+        return false;
+      }
       $total_min=INF;//最小値を初期化
       $min_index='';//最小値のインデックスを初期化
-      echo "探索候補は";
-      var_dump($open_list);
-      echo "<br>";
       for ($k=0; $k <count($open_list) ; $k++) {//探索候補の中身を全て確認
         $open_y=$open_list[$k][0];//探索候補の縦軸
         $open_x=$open_list[$k][1];//探索候補の横軸
+        echo "探索候補のノード【{$open_y},{$open_x}】<br>";
+        echo "【{$open_y},{$open_x}】のトータルコストは{$total_cost[$open_y][$open_x]}<br>";
         if ($maze[$open_y][$open_x]==="G") {//探索候補がゴールである場合
           return "G";
         }elseif ($total_cost[$open_y][$open_x]<$total_min) {//トータルコストが最小値よりも小さい場合
           $total_min=$total_cost[$open_y][$open_x];//最小値を更新
           $min_index=$k;//最小値のインデックスも保存
         }
-        echo "k={$k},min_index==={$min_index}<br>";
+        // if ($total_cost[$open_y][$open_x]===$total_min||) {
+          
+        // }
+        echo "min_index==={$min_index}<br>";
       }
       return $min_index;
+    }
+
+    function total_cost($maze,$goal_node,$open_list,&$total_cost,&$cost,$current_node)//
+    {
+      $check_node=[];//探索候補が複数ある場合に一つ一つ確認するための空の配列
+      $current_y=$current_node[0][0];//現在地の縦軸
+      $current_x=$current_node[0][1];//現在地の横軸
+      $node_cost=1;//ノード間コスト
+      $open_cost=$cost[$current_y][$current_x]+$node_cost;//スタートから探索候補までに移動するのにかかるコスト
+      echo"スタートから以下の探索候補までのコストは{$open_cost}<br>";
+      for ($i=0; $i < count($open_list); $i++) {//探索候補の分だけ検索する
+        $check_node=$open_list[$i];//探索候補を一つ一つ計算していくために代入
+        $open_y=$check_node[0];//探索候補の縦軸
+        $open_x=$check_node[1];//探索候補の横軸
+        if ($cost[$open_y][$open_x]===INF) {//更新されていない場合
+          $cost[$open_y][$open_x]=$open_cost;//探索候補地のスタートから探索候補までに移動するのにかかるコストを更新
+        }
+
+        $y_dist=abs($goal_node[0]-$open_y);//ゴールの縦軸から探索候補の縦軸を引いた縦距離の差
+        $x_dist=abs($goal_node[1]-$open_x);//ゴールの横軸から探索候補の横軸を引いたの横距離の差
+        $h_cost=$y_dist+$x_dist;//ヒューリスティックコストの算出
+
+        //トータルコストがヒューリスティックコストとノード間コストを足したものよりも大きく、かつトータルコストが更新されていない場合
+        if ($h_cost+$node_cost<$total_cost[$open_y][$open_x]&&$total_cost[$open_y][$open_x]===INF) {
+          $total_cost[$open_y][$open_x]=$h_cost+$open_cost;//ヒューリスティックコスト＋ノード間コスト＝トータルコスト
+        }
+      }
+      return;//すべての探索候補の計算が終了したら終了
     }
 
     function Astar(&$maze,$goal_node,$start_node,$x_count,$y_count)
     {
       global $br;
       $br="<br>";
-      $total_cost=[];//ヒューリスティックコスト＋ノード間コスト＝トータルコスト
+      $cost=[];//スタートから各ノードに移動するまでのかかったコスト
+      $total_cost=[];//(ヒューリスティックコスト)＋(スタートから各ノードに移動するまでのかかったコスト)＝トータルコスト
       $open_list=[];//探索候補地のノードを入れる
       $close_list=[];//探索済みのノードを入れる配列
       $current_node=[];//現在地
       $flg=[];//探索済みであるか判断するための配列
-      $current_node[]=[$start_node[0],$start_node[1]];//スタートの位置を現在地に入れる
 
       for ($i=0; $i < $y_count; $i++) {
         for ($j=0; $j <$x_count ; $j++) {
           $total_cost[$i][$j]=INF;//合計値の初期化
+          $cost[$i][$j]=INF;//合計値の初期化
           $flg[$i][$j]=false;//探索済みであるかの配列
         }
       }
+        $current_node[]=[$start_node[0],$start_node[1]];//スタートの位置を現在地に入れる
+        $cost[$start_node[0]][$start_node[1]]=0;//スタート位置は移動しないので0
       while (true) {
         echo "-----------------------------------------------------<br>";
         $current_y=$current_node[0][0];//現在地の縦軸
         $current_x=$current_node[0][1];//現在地の横軸
         search_node($maze,$open_list,$current_node,$flg,$x_count,$y_count);//現在地をもとに探索候補探し
-        total_cost($maze,$goal_node,$open_list,$total_cost);//探索候補のトータルコストの算出
+        total_cost($maze,$goal_node,$open_list,$total_cost,$cost,$current_node);//探索候補のトータルコストの算出
         $min_index=check_goal($maze,$open_list,$total_cost);//探索候補の中でゴールがあればゴール判定、そうでなければトータルコストが最小のものの出力
-        echo $min_index;
-        if ($min_index==="G") {
+        if ($min_index===false) {
           echo "ゴールしました";
         break;//breakしているが後で変更、ここで探索済みの経路をたどって、1に変えて迷路の出力をする
         }else{//ゴールが見つからなかった場合
@@ -173,9 +183,9 @@
         unset($open_list[$min_index]);//探索候補地から最小値のノードを削除
         $open_list=array_values($open_list);//探索候補地のキーをそろえる
       }
-      //return;
-      // 、トータルコストは{$total_cost[$current_y][$current_x]}
-
+      echo"<pre>";
+      var_dump($close_list);
+      echo"</pre>";
     }
     
   //   $maze=[
