@@ -197,6 +197,78 @@ const widget = {
 };
 console.log(widget.windw); //プロパティ名を間違えてもエラーは出ない
 //console.log(widget.windw.title);//titleまで調べたときに初めてエラーが出る
+
+//in演算子
+const obj4 = { key: undefined };
+if ("key" in obj4) {
+    console.log("`key`プロパティは存在する");
+}
+
+//hasOwnPropety
+const obj5 = { key: "value" };
+if (obj5.hasOwnProperty("key")) {
+    console.log("`object`は`key`プロパティを持っている");
+}
+
+//toStringメソッド、オブジェクト自信を文字列化するメソッド、string（）はtoStringと同じ
+const obj6 = { key: "value" };
+console.log(obj6.toString()); 
+console.log(String(obj6));
+
+//オブジェクトの列挙
+const obj7 = {
+    "one": 1,
+    "two": 2,
+    "three": 3
+};
+console.log(Object.keys(obj7)); // `Object.keys`はキーの列挙した配列を返す
+console.log(Object.values(obj7)); // 値を列挙した配列を返す
+console.log(Object.entries(obj7));// [キー, 値]の配列を返す
+
+const keys = Object.keys(obj7);
+keys.forEach(key => {
+    console.log(key);
+});
+
+//オブジェクトのマージと複製
+const objectA = { a: "a" };
+const objectB = { b: "b" };
+const merged = Object.assign({}, objectA, objectB);
+//Object.assignでマージ、空のオブジェクトだけでなく既存のオブジェクトにもできるが、既存のものにマージすると代入したものは消える
+console.log(merged);
+
+//オブジェクトのspread構文でのマージ
+const objectC = { a: "a" };
+const objectD = { b: "b" };
+const merged2 = { 
+    ...objectC,//Object.assignとは異なり、新しいオブジェクトを作成する
+    ...objectD
+};
+console.log(merged2);
+//オブジェクトの複製
+const shallowClone = (obj) => {
+    return Object.assign({}, obj);
+};
+const obj = { 
+    level: 1,
+    nest: {
+        level: 2
+    },
+};
+const cloneObj = shallowClone(obj);//nestのオブジェクトはコピーされない、levelまで
+console.log(cloneObj.nest === obj.nest);//nestまでコピーするならユーザー側で実装
+
+
+/*
+プロトタイプオブジェクト
+--------------------------------------------------------
+*/
+
+/*
+プロトタイプメソッドとインスタンスメソッドの中で同じ名前のメソッドがあった場合、優先度はインスタンスのほうが高い
+Object.prototypeはすべてのオブジェクトの親となるオブジェクトである
+Object.prototypeを継承しないオブジェクトも作れる、Object.create(null)
+*/
 console.log();
 console.log();
 console.log();
