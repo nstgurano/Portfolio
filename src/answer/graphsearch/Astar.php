@@ -36,6 +36,17 @@
         ["X","0","0","X","0","0"],
         ["X","X","0","0","0","X"]
     ];
+    //    $maze=[
+//        ["S","X","0","0","0","0","0","0"],
+//        ["0","X","0","X","X","X","X","0"],
+//        ["0","X","0","X","0","0","0","0"],
+//        ["0","X","0","X","0","X","X","0"],
+//        ["0","X","0","X","0","X","0","0"],
+//        ["0","0","0","X","G","X","0","X"],
+//        ["0","X","X","X","X","X","0","X"],
+//        ["0","0","0","0","0","X","0","0"],
+//    ];
+
     $br='<br>';
     $y_count=count($maze);//縦軸がどこまであるか確認
     $x_count=count($maze[0]);//横軸がどこまであるか確認※１行目だけ確認
@@ -52,7 +63,7 @@
       echo $br;
     }
 
-    var_dump(Astar($maze,$goal_node,$start_node,$x_count,$y_count));
+    Astar($maze,$goal_node,$start_node,$x_count,$y_count);
 
     function Start_goal_search($maze,$y_count,$x_count,$text)
     {
@@ -67,7 +78,7 @@
     }
 
 
-    function search_node($maze,&$open_list,$current_node,$flg,$x_count,$y_count)//隣接ノードを検索し、進めるものがあれば更新
+    function search_node($maze,&$open_list,$current_node,$cost,$x_count,$y_count)//隣接ノードを検索し、進めるものがあれば更新
     {
       $y=$current_node[0][0];//縦軸
       $x=$current_node[0][1];//横軸
@@ -75,16 +86,16 @@
       if ($maze[$y][$x]==='X'||$x_count-1<$x||$x<0||$y_count-1<$y||$y<0||$maze[$y][$x]==='1'||$maze[$y][$x]==='G') {//進めない条件
         return;
       }
-      if ($maze[$y][$x+1]==='0'&&$flg[$y][$x+1]===false) {//右のノードを検索
+      if ($maze[$y][$x+1]==='0'&&$cost[$y][$x+1]===INF) {//右のノードを検索
         array_push($open_list,[$y,$x+1]);
       }
-      if ($maze[$y][$x-1]==='0'&&$flg[$y][$x-1]===false) {//左のノードを検索
+      if ($maze[$y][$x-1]==='0'&&$cost[$y][$x-1]===INF) {//左のノードを検索
         array_push($open_list,[$y,$x-1]);
       }
-      if ($maze[$y-1][$x]==='0'&&$flg[$y-1][$x]===false) {//上のノードを検索
+      if ($maze[$y-1][$x]==='0'&&$cost[$y-1][$x]===INF) {//上のノードを検索
         array_push($open_list,[$y-1,$x]);
       }
-      if ($maze[$y+1][$x]==='0'&&$flg[$y+1][$x]===false) {//下のノードを検索
+      if ($maze[$y+1][$x]==='0'&&$cost[$y+1][$x]===INF) {//下のノードを検索
         array_push($open_list,[$y+1,$x]);
       }
     }
@@ -143,7 +154,38 @@
       return;//すべての探索候補の計算が終了したら終了
     }
 
-    function Astar(&$maze,$goal_node,$start_node,$x_count,$y_count)
+    function reverse_run(&$maze,$close_list,$y_count,$x_count,$cost)//ゴールまでの最短距離を確認し、迷路を1に変えて出力
+    {
+      $last_key=count($close_list)-1;//ゴールの一つ前のノード
+      $close_y=$close_list[$last_key][0];//ゴールの一つ前のノードの縦軸
+      $close_x=$close_list[$last_key][1];//ゴールの一つ前のノードの横軸
+      $maze[$close_y][$close_x]="1";//
+      $check_cost=$cost[$close_y][$close_x];
+      for ($i=$last_key-1; 0<=$i ; $i--) {//
+        // echo "-----------------------------------------------------<br>";
+        $check_y=$close_list[$i][0];//
+        $check_x=$close_list[$i][1];//
+        // echo "iは{$i},基準のコストは{$check_cost},比較するコストは{$cost[$check_y][$check_x]}<br>";
+        if ($i===0) {
+          break;
+        }elseif ($cost[$check_y][$check_x]===$check_cost-1) {//
+          $maze[$check_y][$check_x]="1";//
+          $check_cost--;
+        }
+
+      }
+
+      echo "【最短距離】<br>";
+      for ($y=0; $y <$y_count ; $y++) {//迷路の出力
+        for ($x=0; $x <$x_count ; $x++) {
+          echo $maze[$y][$x];
+        }
+        echo "<br>";
+      }
+
+    }
+
+    function Astar($maze,$goal_node,$start_node,$x_count,$y_count)
     {
       global $br;
       $br="<br>";
@@ -152,48 +194,37 @@
       $open_list=[];//探索候補地のノードを入れる
       $close_list=[];//探索済みのノードを入れる配列
       $current_node=[];//現在地
-      $flg=[];//探索済みであるか判断するための配列
 
       for ($i=0; $i < $y_count; $i++) {
         for ($j=0; $j <$x_count ; $j++) {
           $total_cost[$i][$j]=INF;//合計値の初期化
           $cost[$i][$j]=INF;//合計値の初期化
-          $flg[$i][$j]=false;//探索済みであるかの配列
         }
       }
-        $current_node[]=[$start_node[0],$start_node[1]];//スタートの位置を現在地に入れる
-        $cost[$start_node[0]][$start_node[1]]=0;//スタート位置は移動しないので0
+      $current_node[]=[$start_node[0],$start_node[1]];//スタートの位置を現在地に入れる
+      $cost[$start_node[0]][$start_node[1]]=0;//スタート位置は移動しないので0
       while (true) {
         echo "-----------------------------------------------------<br>";
         $current_y=$current_node[0][0];//現在地の縦軸
         $current_x=$current_node[0][1];//現在地の横軸
-        search_node($maze,$open_list,$current_node,$flg,$x_count,$y_count);//現在地をもとに探索候補探し
+        search_node($maze,$open_list,$current_node,$cost,$x_count,$y_count);//現在地をもとに探索候補探し
         total_cost($maze,$goal_node,$open_list,$total_cost,$cost,$current_node);//探索候補のトータルコストの算出
         $min_index=check_goal($maze,$open_list,$total_cost);//探索候補の中でゴールがあればゴール判定、そうでなければトータルコストが最小のものの出力
         if ($min_index===false) {
-          echo "ゴールしました";
-        break;//breakしているが後で変更、ここで探索済みの経路をたどって、1に変えて迷路の出力をする
+          array_push($close_list,$current_node[0]);//現在地からゴールを見つけたので探索済みに入れる
+          echo "ゴールしました<br>";
+          break;//breakしているが後で変更、ここで探索済みの経路をたどって、1に変えて迷路の出力をする
         }else{//ゴールが見つからなかった場合
-            echo "トータルコストの最小値の位置は【{$open_list[$min_index][0]},{$open_list[$min_index][1]}】".$br;
+          echo "トータルコストの最小値の位置は【{$open_list[$min_index][0]},{$open_list[$min_index][1]}】".$br;
         }
-        $flg[$current_y][$current_x]=true;//探索済みにする
-
         $close_list[]=array_shift($current_node);//探索地を探索済みの配列に代入
         $current_node[]=$open_list[$min_index];//現在地の更新
         unset($open_list[$min_index]);//探索候補地から最小値のノードを削除
         $open_list=array_values($open_list);//探索候補地のキーをそろえる
       }
-      echo"<pre>";
-      var_dump($close_list);
-      echo"</pre>";
+      reverse_run($maze,$close_list,$y_count,$x_count,$cost);
     }
     
-  //   $maze=[
-  //     ["0","X","S","0","X","0"],
-  //     ["0","G","X","0","0","0"],
-  //     ["X","0","0","X","0","0"],
-  //     ["X","X","0","0","0","X"]
-  // ];
     
 //    $maze=[
 //        ["S","X","0","0","0","0","0","0"],
