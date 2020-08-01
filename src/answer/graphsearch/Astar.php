@@ -30,23 +30,53 @@
  */
     // 迷路データ
     
+    // $maze=[
+    //     ["0","X","S","0","X","0"],
+    //     ["0","G","X","0","0","0"],
+    //     ["X","0","0","X","0","0"],
+    //     ["X","X","0","0","0","X"]
+    // ];
     $maze=[
-        ["0","X","S","0","X","0"],
-        ["0","G","X","0","0","0"],
-        ["X","0","0","X","0","0"],
-        ["X","X","0","0","0","X"]
+       ["S","X","0","0","0","0","0","0"],
+       ["0","X","0","X","X","X","X","0"],
+       ["0","X","0","X","0","0","0","0"],
+       ["0","X","0","X","0","X","X","0"],
+       ["0","X","0","X","0","X","0","0"],
+       ["0","0","0","X","G","X","0","X"],
+       ["0","X","X","X","X","X","0","X"],
+       ["0","0","0","0","0","X","0","0"],
     ];
-    //    $maze=[
-//        ["S","X","0","0","0","0","0","0"],
-//        ["0","X","0","X","X","X","X","0"],
-//        ["0","X","0","X","0","0","0","0"],
-//        ["0","X","0","X","0","X","X","0"],
-//        ["0","X","0","X","0","X","0","0"],
-//        ["0","0","0","X","G","X","0","X"],
-//        ["0","X","X","X","X","X","0","X"],
-//        ["0","0","0","0","0","X","0","0"],
-//    ];
+       $maze=[
+       ["0","0","0","0","0","0","0","0","0","0","0","0","0"],
+       ["X","X","X","X","X","X","0","X","X","X","X","X","0"],
+       ["0","0","0","X","0","0","0","X","G","0","0","X","0"],
+       ["0","X","0","X","0","X","0","X","X","X","0","X","0"],
+       ["0","X","0","0","0","X","0","0","0","X","0","X","0"],
+       ["0","X","0","X","X","X","X","X","0","X","0","X","0"],
+       ["0","X","0","X","0","0","0","X","0","X","0","X","S"],
+       ["0","X","X","X","0","X","0","X","0","X","0","X","X"],
+       ["0","X","0","0","0","X","0","X","0","X","0","0","0"],
+       ["0","X","0","X","X","X","0","X","0","X","X","X","0"],
+       ["0","X","0","0","0","X","0","X","0","0","0","X","0"],
+       ["0","X","X","X","0","X","0","X","X","X","X","X","0"],
+       ["0","0","0","0","0","X","0","0","0","0","0","0","0"],
+   ];
 
+      $maze=[
+       ["0","0","0","0","0","0","0","0","0","0","0","0","0"],
+       ["X","X","X","X","X","X","0","X","X","X","X","X","0"],
+       ["0","0","0","X","0","0","0","X","G","0","0","X","0"],
+       ["0","X","0","X","0","X","0","X","X","X","0","X","0"],
+       ["0","X","0","0","0","X","0","0","0","X","0","X","0"],
+       ["0","X","0","X","X","X","X","X","0","X","0","X","0"],
+       ["0","X","0","X","0","0","0","X","0","X","0","X","S"],
+       ["0","X","X","X","0","X","0","X","0","X","0","X","X"],
+       ["0","X","0","0","0","X","0","X","0","X","0","0","0"],
+       ["0","X","0","X","X","X","0","X","0","X","X","X","0"],
+       ["0","X","0","0","0","X","0","X","0","0","0","X","0"],
+       ["0","X","X","X","0","X","0","X","X","X","0","X","0"],
+       ["0","0","0","0","0","X","0","0","0","0","0","0","0"],
+   ];
     $br='<br>';
     $y_count=count($maze);//縦軸がどこまであるか確認
     $x_count=count($maze[0]);//横軸がどこまであるか確認※１行目だけ確認
@@ -77,33 +107,44 @@
       }
     }
 
-
     function search_node($maze,&$open_list,$current_node,$cost,$x_count,$y_count)//隣接ノードを検索し、進めるものがあれば更新
     {
       $y=$current_node[0][0];//縦軸
       $x=$current_node[0][1];//横軸
 
-      if ($maze[$y][$x]==='X'||$x_count-1<$x||$x<0||$y_count-1<$y||$y<0||$maze[$y][$x]==='1'||$maze[$y][$x]==='G') {//進めない条件
+      if ($maze[$y][$x]==='X'||$x_count-1<$x||$x<0||$y_count-1<$y||$y<0) {//進めない条件
         return;
       }
-      if ($maze[$y][$x+1]==='0'&&$cost[$y][$x+1]===INF) {//右のノードを検索
-        array_push($open_list,[$y,$x+1]);
+      if ($maze[$y][$x+1]==='0'||$maze[$y][$x+1]==='G') {//右のノードを検索
+        if ($cost[$y][$x+1]===INF) {
+          array_push($open_list,[$y,$x+1]);
+        }
       }
-      if ($maze[$y][$x-1]==='0'&&$cost[$y][$x-1]===INF) {//左のノードを検索
-        array_push($open_list,[$y,$x-1]);
+      if ($maze[$y][$x-1]==='0'||$maze[$y][$x-1]==='G') {//左のノードを検索
+        if ($cost[$y][$x-1]===INF) {
+          array_push($open_list,[$y,$x-1]);
+        }
       }
-      if ($maze[$y-1][$x]==='0'&&$cost[$y-1][$x]===INF) {//上のノードを検索
-        array_push($open_list,[$y-1,$x]);
+      if ($maze[$y-1][$x]==='0'||$maze[$y-1][$x]==='G') {//上のノードを検索
+        if ($cost[$y-1][$x]===INF) {
+          array_push($open_list,[$y-1,$x]);
+        }
       }
-      if ($maze[$y+1][$x]==='0'&&$cost[$y+1][$x]===INF) {//下のノードを検索
-        array_push($open_list,[$y+1,$x]);
+      if ($maze[$y+1][$x]==='0'||$maze[$y+1][$x]==='G') {//下のノードを検索
+        if ($cost[$y+1][$x]===INF) {
+          array_push($open_list,[$y+1,$x]);
+        }
       }
     }
 
     function check_goal($maze,$open_list,$total_cost)//探索候補の中でゴールがあればゴール判定、そうでなければトータルコストが最小のものの出力
     {
-      if (empty($open_list)) {//探索候補がなくなったらゴール判定
-        return false;
+      for ($i=0; $i < count($open_list); $i++) {//探索候補の中からゴール探し
+        $open_y=$open_list[$i][0];//縦軸
+        $open_x=$open_list[$i][1];//横軸
+        if ($maze[$open_y][$open_x]==="G") {
+          return "G";
+        }
       }
       $total_min=INF;//最小値を初期化
       $min_index='';//最小値のインデックスを初期化
@@ -112,15 +153,10 @@
         $open_x=$open_list[$k][1];//探索候補の横軸
         echo "探索候補のノード【{$open_y},{$open_x}】<br>";
         echo "【{$open_y},{$open_x}】のトータルコストは{$total_cost[$open_y][$open_x]}<br>";
-        if ($maze[$open_y][$open_x]==="G") {//探索候補がゴールである場合
-          return "G";
-        }elseif ($total_cost[$open_y][$open_x]<$total_min) {//トータルコストが最小値よりも小さい場合
+        if ($total_cost[$open_y][$open_x]<$total_min) {//トータルコストが最小値よりも小さい場合
           $total_min=$total_cost[$open_y][$open_x];//最小値を更新
           $min_index=$k;//最小値のインデックスも保存
         }
-        // if ($total_cost[$open_y][$open_x]===$total_min||) {
-          
-        // }
         echo "min_index==={$min_index}<br>";
       }
       return $min_index;
@@ -154,13 +190,60 @@
       return;//すべての探索候補の計算が終了したら終了
     }
 
-    function reverse_run(&$maze,$close_list,$y_count,$x_count,$cost)//ゴールまでの最短距離を確認し、迷路を1に変えて出力
+    function reverse_run(&$maze,$close_list,$y_count,$x_count,$goal_node,$cost)//ゴールまでの最短距離を確認し、迷路を1に変えて出力
     {
       $last_key=count($close_list)-1;//ゴールの一つ前のノード
-      $close_y=$close_list[$last_key][0];//ゴールの一つ前のノードの縦軸
-      $close_x=$close_list[$last_key][1];//ゴールの一つ前のノードの横軸
-      $maze[$close_y][$close_x]="1";//
-      $check_cost=$cost[$close_y][$close_x];
+      $check_y=$close_list[$last_key][0];//ゴールの一つ前のノードの縦軸
+      $check_x=$close_list[$last_key][1];//ゴールの一つ前のノードの横軸
+
+      $check_cost=$cost[$check_y][$check_x];//ゴールのコストが初期値
+      $maze[$check_y][$check_x]="1";
+
+      while ($cost[$check_y][$check_x]!==1) {
+        echo "------------------------------------------------------------<br>";
+        echo "基準のコストは{$check_cost}<br>";
+        if ($maze[$check_y+1][$check_x]==="0") {//下方向の実際にかかったコストと比較
+          if ($check_cost-1===$cost[$check_y+1][$check_x]) {//基準のコストと下方向のコストを比較
+          $maze[$check_y+1][$check_x]="1";//迷路を変える
+          echo "現在地のノードは【{$check_y},{$check_x}】、基準のコストを下方向の【{$cost[$check_y+1][$check_x]}】に更新<br>";
+          $check_cost=$cost[$check_y+1][$check_x];//更新
+          $check_y+=1;//下方向を調べる
+          }
+        }
+        if ($maze[$check_y-1][$check_x]==="0") {//上方向のトータルコストと比較
+          if ($check_cost-1===$cost[$check_y-1][$check_x]) {//
+          $maze[$check_y-1][$check_x]="1";
+          echo "現在地のノードは【{$check_y},{$check_x}】、基準のコストを上方向の【{$cost[$check_y-1][$check_x]}】に更新<br>";
+          $check_cost=$cost[$check_y-1][$check_x];//
+          $check_y-=1;//上方向を調べる
+          }
+        }
+        if ($maze[$check_y][$check_x+1]==="0") {//右方向のトータルコストと比較
+          if ($check_cost-1===$cost[$check_y][$check_x+1]) {//
+            $maze[$check_y][$check_x+1]="1";
+            echo "現在地のノードは【{$check_y},{$check_x}】、基準のコストを右方向の【{$cost[$check_y][$check_x+1]}】に更新<br>";
+            $check_cost=$cost[$check_y][$check_x+1];
+            $check_x+=1;//右方向を調べる
+          }
+        }
+        if ($maze[$check_y][$check_x-1]==="0") {//左方向のトータルコストと比較
+          if ($check_cost-1===$cost[$check_y][$check_x-1]) {//
+            $maze[$check_y][$check_x-1]="1";
+            echo "現在地のノードは【{$check_y},{$check_x}】、基準のコストを左方向の【{$cost[$check_y][$check_x-1]}】に更新<br>";
+            $check_cost=$cost[$check_y][$check_x-1];
+            $check_x-=1;//左方向を調べる
+          }
+        }
+        //$delta=[[1,0],[-1,0],[0,1],[0,-1]];
+      }
+      echo "【最短距離】<br>";
+      for ($y=0; $y <$y_count ; $y++) {//迷路の出力
+        for ($x=0; $x <$x_count ; $x++) {
+          echo $maze[$y][$x];
+        }
+        echo "<br>";
+      }
+            $check_cost=$cost[$close_y][$close_x];
       for ($i=$last_key-1; 0<=$i ; $i--) {//
         // echo "-----------------------------------------------------<br>";
         $check_y=$close_list[$i][0];//
@@ -172,22 +255,11 @@
           $maze[$check_y][$check_x]="1";//
           $check_cost--;
         }
-
       }
-
-      echo "【最短距離】<br>";
-      for ($y=0; $y <$y_count ; $y++) {//迷路の出力
-        for ($x=0; $x <$x_count ; $x++) {
-          echo $maze[$y][$x];
-        }
-        echo "<br>";
-      }
-
     }
 
     function Astar($maze,$goal_node,$start_node,$x_count,$y_count)
     {
-      global $br;
       $br="<br>";
       $cost=[];//スタートから各ノードに移動するまでのかかったコスト
       $total_cost=[];//(ヒューリスティックコスト)＋(スタートから各ノードに移動するまでのかかったコスト)＝トータルコスト
@@ -209,8 +281,9 @@
         $current_x=$current_node[0][1];//現在地の横軸
         search_node($maze,$open_list,$current_node,$cost,$x_count,$y_count);//現在地をもとに探索候補探し
         total_cost($maze,$goal_node,$open_list,$total_cost,$cost,$current_node);//探索候補のトータルコストの算出
+        echo "現在地は【{$current_y},{$current_x}】<br>";
         $min_index=check_goal($maze,$open_list,$total_cost);//探索候補の中でゴールがあればゴール判定、そうでなければトータルコストが最小のものの出力
-        if ($min_index===false) {
+        if ($min_index==="G") {
           array_push($close_list,$current_node[0]);//現在地からゴールを見つけたので探索済みに入れる
           echo "ゴールしました<br>";
           break;//breakしているが後で変更、ここで探索済みの経路をたどって、1に変えて迷路の出力をする
@@ -222,7 +295,7 @@
         unset($open_list[$min_index]);//探索候補地から最小値のノードを削除
         $open_list=array_values($open_list);//探索候補地のキーをそろえる
       }
-      reverse_run($maze,$close_list,$y_count,$x_count,$cost);
+      reverse_run($maze,$close_list,$y_count,$x_count,$goal_node,$cost);
     }
     
     
