@@ -20,7 +20,13 @@ services:
       context: ./mysql
       dockerfile: Dockerfile
     environment:
-      - MYSQL_ROOT_PASSWORD=pass
+      MYSQL_ROOT_PASSWORD: root       #rootユーザ用のパスワード
+      MYSQL_USER: user1                 #作業ユーザ名
+      MYSQL_PASSWORD: pass     #作業ユーザ用のパスワード
+      MYSQL_DATABASE: store_db 
+      TZ: "Asia/Tokyo"
+    ports:
+        - "3306:3306"
     volumes:
       # MySQLの設定ファイル
       - ./mysql/mysql_conf:/etc/mysql/conf.d
