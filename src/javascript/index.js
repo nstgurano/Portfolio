@@ -218,6 +218,7 @@ function getUserId() {
 }
 
 function createView(userInfo) {
+    //escapeHTMLタグ関数はHTML要素を出力する
     return escapeHTML`
     <h4>${userInfo.name} (@${userInfo.login})</h4>
     <img src="${userInfo.avatar_url}" alt="${userInfo.login}" height="100">
