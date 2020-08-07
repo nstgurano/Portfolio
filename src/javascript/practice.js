@@ -1,9 +1,9 @@
 // コールバック関数、関数に別の関数を呼び出してもらうもの
 // 関数を受け取る関数を高階関数という
 // 関数は値として扱える
-setTimeout(function() {//settimeout関数(関数、引数)
-    console.log('Hello!');
-  }, 2000);
+// setTimeout(function() {//settimeout関数(関数、引数)
+//     console.log('Hello!');
+//   }, 2000);
   
   function doTwiceWithValue(func) {
     func('Hello!'); // 1回目！
@@ -64,3 +64,18 @@ function tag(){
 tag`\\ジャバ${true}スク${1 + 2}リプト`;//渡される引数が変わる
 var b = String.raw`ジャバ\スク\nリプト`;//エスケープせずに文字をそのまま使える
 console.log(b);
+
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => { 
+      console.log('hello');
+      resolve();
+  }, 500);
+});
+
+promise.then(() => console.log('world!'));
+
+const promise2 = new Promise((resolve, reject) => reject('error'));
+
+promise2.then(() => console.log('done')) // thenは実行されない
+  .catch((e) => console.log(e)); // reject はcatchで受け取る
+
