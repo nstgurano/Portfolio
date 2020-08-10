@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.content{
+    line-height: 40px;
+}
+.content{
+    width: 500px;
+    padding: 10px;
+    border:1px solid #ccc;
+}
