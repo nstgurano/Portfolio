@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.content{
+    width: 500px;
+    padding: 10px;
+    border:1px solid #ccc;
+    line-height: 40px;
+}
+:hover .content {
+    cursor: pointer;
+}
