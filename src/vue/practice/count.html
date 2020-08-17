@@ -1,0 +1,42 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        button{
+            color: aliceblue;
+            background-color: #007bff;
+            border-radius: 2px;
+            border: solid 1px white;
+            cursor: pointer;
+            opacity: 5;
+            
+        }
+    </style>
+    <h2>クリックしたらカウントアップ</h2>
+    <div id="app">
+        <p>{{hellow}}</p>
+        <p v-text="hellow"></p>
+        <p>{{count}}回</p>
+        <button v-on:click="countUp">カウント</button>
+    </div>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                hellow:'Hellow,world!',
+                count:0
+            },
+            methods:{
+                countUp:function(){
+                    this.count++;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

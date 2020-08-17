@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{myNumber}}</p>
+        <p>{{myText}}</p>
+        <p>{{myBool}}</p>
+        <p>{{"こんにちは、"+myNumber+"さん"}}</p>
+        <p>{{myName.substr(0,1)}}</p>
+        <p>{{myPrice*1.1}}</p>
+        <p>{{myArray}}</p>
+        <p>{{myArray[0]}}</p>
+        <p>{{myTea}}</p>
+        <p>{{myTea.name}}　￥{{myTea.price}}</p>
+        <p>{{myTea2}}</p>
+        <hr>
+        {{$data}}
+        <hr>
+        <li v-for="(item,key) in $data">{{key}}:{{item}}</li>
+    </div>
+
+    <script>
+        let teaList=[
+                        {'name':'ダージリン','price':600},
+                        {'name':'アールグレイ','price':200},
+                        {'name':'ジャスミン','price':300}
+                    ];
+        new Vue({
+            el:'#app',
+            data:{
+                myNumber:12345,
+                myText:'Hellow!',
+                myBool:true,
+                myPrice:500,
+                myName:"浦野",
+                myArray:['ダージリン','アールグレイ','セイロン'],
+                myTea:{'name':'ダージリン','price':600},
+                myTea2:teaList
+            }
+        })
+    </script>
+</body>
+</html>
