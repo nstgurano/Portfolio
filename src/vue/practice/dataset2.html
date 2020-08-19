@@ -1,0 +1,24 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <img src="face1.png" alt="">
+        <p>直接指定</p>
+        <img v-bind:src="fileName" alt="">
+        <p>vibindで指定</p>
+    </div>
+    <script>
+        new Vue({
+            el:'app',
+            data:{
+                fileName='face1.img'
+            }
+        })
+    </script>
+</body>
+</html>
