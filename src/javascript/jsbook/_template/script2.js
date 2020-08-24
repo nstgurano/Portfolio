@@ -45,24 +45,38 @@
 // };
 
 
-$(document).ready(function () {
-    $.ajax({ url: 'data.json', dataType: 'json' })
-        .done(function (data) {
-            data.forEach(function(item,index) {
-                if (item.crowed==='yes') {
-                    const idName = '#' + item.id;
-                    $(idName).find('check').addClass('crowded');
-                }
-            });
-        })
-        .fail(function () {
-            window.alert('読み込みエラー');
-        });
-    $('click').on('click', function () {
-        if ($(this).hasClass('crowded')) {
-            $(this).text('残席わずか').addClass('red');
-        } else {
-            $(this).text('お席あります').addClass('green')
-        }
-    });
-});
+// $(document).ready(function () {
+//     $.ajax({ url: 'data.json', dataType: 'json' })
+//         .done(function (data) {
+//             data.forEach(function (item, index) {
+//                 if (item.crowded ==='yes') {
+//                     const idName = '#' + item.id;
+//                     $(idName).find('check').addClass('crowded');
+//                 }
+//             });
+//         })
+//         .fail(function () {
+//             window.alert('読み込みエラー');
+//         });
+//     $('.click').on('click', function () {
+//         if ($(this).hasClass('crowded')) {
+//             $(this).text('残席わずか').addClass('red');
+//         } else {
+//             $(this).text('お席あります').addClass('green');
+//         }
+//     });
+// });
+
+function success(pos) {
+    console.log(pos);
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+    const accuracy = pos.coords.accuracy;
+
+    $('#loc').text(`緯度：${lat}経度：${lng}`);
+    $('#accuracy').text(accuracy);
+}
+function fail(error) {
+    alert('位置情報の取得に失敗しました。エラーコード'+error.code)
+}
+navigator.geolocation.getCurrentPosition(success, fail);
