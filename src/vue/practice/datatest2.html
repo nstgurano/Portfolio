@@ -1,0 +1,51 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .strike{
+            text-decoration: line-through;
+            color: lightgray;
+        }
+        .dark{
+            background-color: gray;
+        }
+    </style>
+    <div id="app">
+        <img src="./img/face1.png" alt="">直接指定</img>
+        <br>
+        <img v-bind:src="fileName" alt="">vbindで指定</img>
+        <br>
+        <a href="datatest.html">リンクを直接指定</a>
+        <a v-bind:href="link">vbindで指定</a>
+        <p align='right'>右寄せを直接指定</p>
+        <p v-bind:align='align'>v-alignで指定</p>
+        <p v-bind:style="{color:color}">色の指定</p>
+        <p v-bind:style="{fontSize:size}">色の指定</p>
+        <p v-bind:style="{backgroundColor:back}">色の指定</p>
+        <p v-bind:class="myClass">vbindでクラス指定</p>
+        <p v-bind:class="[myClass,dark]">vbindでクラス指定</p>
+        <p v-bind:class="{'strike':isON}">vbindでクラス指定</p>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                fileName:'./img/face1.png',
+                link:'datatest.html',
+                align:'right',
+                color:'red',
+                size:'2em',
+                back:'blue',
+                myClass:'strike',
+                dark:'dark',
+                isON:true
+            }
+        })
+    </script>
+</body>
+</html>

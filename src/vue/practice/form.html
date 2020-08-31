@@ -1,0 +1,81 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input v-model="data" type="text" placeholder="お名前"/>
+        <p>my name is {{data}}!</p>
+        <textarea  v-model="data2"></textarea>
+        <p>letter are　{{data2.length}}</p>
+        
+        
+        <label ><input v-model="check" value="青" type="checkbox" />
+        blue</label>
+        <label ><input v-model="check" value="緑" type="checkbox" />
+        green</label>
+        <label ><input v-model="check" value="赤" type="checkbox" />
+        red</label>
+        <p>チェックボックスは{{check}}</p>
+
+        <label><input v-model="agree" type="checkbox" />同意します</label>
+        <button v-bind:disabled="agree===false">送信</button>
+        <br>
+
+        <label><input v-model="radio" type="radio" value="red"/>赤</label>
+        <label><input v-model="radio" type="radio" value="green"/>緑</label>
+        <label><input v-model="radio" type="radio" value="blue"/>青</label>
+        <p>{{radio}}</p>
+
+        <label><input v-model="file" type="radio" value="./img/face1.png"/>face1.png</label>
+        <br>
+        <label><input v-model="file" type="radio" value="./img/face2.png"/>face2.png</label>
+        <br>
+        <label><input v-model="file" type="radio" value=""/>none</label>
+        <p>FileName is {{file}}</p>
+        <img v-bind:src="file"/></img>
+
+        <select v-model="color" multiple style="width: 150px;">
+            <option disabled value="">色を選んでください</option>
+            <option>red</option>
+            <option>green</option>
+            <option>blue</option>
+            <option>yellow</option>
+        </select>
+        <p v-bind:style="{color:color}">選んだのは{{color}}色です</p>
+
+
+        <input v-model.lazy="text" type="text" />
+        <p>入力後に表示{{text}}</p>
+        <input v-model.number="num" type="number" />
+        <p>100を足して表示{{100+num}}</p>
+
+
+        <input v-model.trim="trim" type="text" />
+        <p>空白を消して表示【{{trim}}】</p>
+
+        </div>
+
+
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                data:'',
+                data2:'',
+                check:[],
+                agree:false,
+                radio:'red',
+                file:'',
+                color:[],
+                text:'',
+                num:0,
+                trim:''
+            }
+        })
+    </script>
+</body>
+</html>

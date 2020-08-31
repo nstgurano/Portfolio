@@ -1,0 +1,51 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{count}}</p>
+        <button @click="countUp">1を足す</button>
+        <button value="いいね" v-bind:disabled="isClick"
+        @click="oneClick">いいね</button>
+        <br>
+        <button @click="up(3)">3を足す</button>
+        <button @click="up(10)">10を足す</button>
+        <button @click="up(100)">100を足す</button>
+        <br>
+        <input @keyup.enter.shift="showAlert" v-model="text" type="text" />
+        <p>{{text}}</p>
+    </div>
+    <script>
+        function iine() {
+            alert('いいね');
+        }
+        new Vue({
+            el:'#app',
+            data:{
+                count:0,
+                isClick:false,
+                text:'Hello!'
+            },
+            methods:{
+                countUp:function () {
+                    this.count++;
+                },
+                oneClick:function () {
+                    this.isClick=true;
+                    iine();
+                },
+                up:function(value){
+                    this.count+=value;
+                },
+                showAlert:function(){
+                    alert('Enterキーとshiftキーを押しました');
+                }
+            }
+        })
+    </script>
+</body>
+</html>
