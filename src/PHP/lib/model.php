@@ -17,4 +17,10 @@ function connect_database($host=HOST,$dbname=DBNAME,$dbuser=DBUSER,$dbpass=DBPAS
     }
     return $dbh;
 }
+
+function select($data)
+{
+    
+}
+
 ?>
