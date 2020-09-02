@@ -7,4 +7,8 @@
                 <li><a href="#">contact</a></li>
             </ul>
         </nav>
+        <div id="open_navi" class="hamburger">
+            <img src="hamburger.png" alt="">
+        </div>
 </header>
+<?php include('hamburger.php')?>

@@ -45,6 +45,9 @@ a{
     list-style: none;
     margin-top: 20;
 }
+.main-navi{
+    align-self: center;
+}
 .list li{
     margin-left: 20px;
     margin-right: 10px;
@@ -56,6 +59,31 @@ a{
 }
 .list a:hover{
     color: #0bd;
+}
+#nav{
+    width: 270px;
+    height: 100%;
+    position: fixed;
+    background-color:white;
+    color: black;
+    right: -270px;
+    top: 0;
+}
+.show{
+    transform: translate3d(-270px,0,0);
+}
+#main,#nav{
+    transition: transform 0.3s;
+}
+#nav li{
+    list-style: none;
+}
+
+.hamburger{
+    align-self: center;
+}
+.hamburger img{
+    width: 50;
 }
 
 /* footer */
