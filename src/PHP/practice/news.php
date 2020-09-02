@@ -52,5 +52,7 @@ require_once('meta.php');?>
         </aside>
     </div>
     <?php require_once('footer.php')?>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
