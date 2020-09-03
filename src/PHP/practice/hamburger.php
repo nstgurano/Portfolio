@@ -1,8 +1,8 @@
-<nav id="nav" >
+<nav id="nav">
     <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">News</a></li>
-        <li><a href="#">Menu</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="home.php">Home</a></li>
+        <li><a href="news.php">News</a></li>
+        <li><a href="menu.php">Menu</a></li>
+        <li><a href="contact.php">Contact</a></li>
     </ul>
 </nav>

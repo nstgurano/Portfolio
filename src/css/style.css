@@ -61,16 +61,16 @@ a{
     color: #0bd;
 }
 #nav{
-    width: 270px;
+    width: 500px;
     height: 100%;
     position: fixed;
     background-color:white;
     color: black;
-    right: -270px;
+    right: -500px;
     top: 0;
 }
 .show{
-    transform: translate3d(-270px,0,0);
+    transform: translate3d(-500px,0,0);
 }
 #main,#nav{
     transition: transform 0.3s;
@@ -134,7 +134,7 @@ footer{
 #news{
     background-image: url(./../images/news-bg.jpg);
     margin-bottom: 40px;
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     width: 100%;
     margin-bottom: 0;
@@ -194,6 +194,70 @@ article img{
 article p{
     margin-bottom: 1rem;
 }
+
+#menu{
+    background-image: url(./../images/menu-bg.jpg);
+    min-height: 100vh;
+}
+.menu-content{
+    max-width: 560px;
+    margin-top: 10%;
+}
+.menu-content .page-title{
+    text-align: center;
+}
+.menu-content p{
+    font-size: 1.123rem;
+    margin:10px 0 0;
+}
+
+/* menu */
+.grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit ,minmax(240px,1fr));
+    gap: 26px;
+    margin-top: 5%;
+    margin-bottom: 50px;
+}
+
+/* contact */
+#contact{
+    background-image: url(./../images/contact-bg.jpg);
+    min-height: 100vh;
+}
+form{
+    margin: 0;
+}
+form div{
+    margin-bottom: 14px;
+}
+input[type='text'],
+input[type='email'],
+textarea{
+    background: rgb(255, 255, 255,.5);
+    border: 1px #fff solid;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+}
+input[type='text'],
+input[type='email']{
+    width: 100%;
+    max-width: 240px;
+}
+textarea{
+    width: 100%;
+    max-width: 480px;
+    height: 6rem;
+}
+input[type='submit']{
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    margin-bottom: 24px;
+}
+
+
 
 @media(max-width:600px){
     .page-title{
