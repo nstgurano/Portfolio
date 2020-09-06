@@ -1,0 +1,66 @@
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>GOOGLE　Chartで円グラフを表示させる例</h2>
+    <h3>好きなランチを表示</h3>
+    <div id="chart_div" style="height: 500px;"></div>
+    <div id="app">
+        <li v-for="(item,c) in dataArray" v-if="c>0">{{item[0]}}:{{item[1]}}
+            <button @click="addOne(c)">1票</button>
+        </li>
+    </div>
+
+    <script>
+        let orgdata = [
+            ['種類', '個数'],
+            ['幕ノ内', 3],
+            ['カルビ弁当', 4],
+            ['オムライス', 5],
+            ['冷やし中華', 1],
+            ['ビビンバ丼', 3],
+            ['ざるそば', 1]
+        ];
+        google.charts.load('current', {
+            packages: ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic() {
+            let data = google.visualization.arrayToDataTable(orgdata);
+            let options = {
+                title: '好きなランチ',
+                "is3D": true
+            };
+            let chart = new google.visualization.PieChart(
+                document.getElementById('chart_div')
+            );
+            chart.draw(data, options);
+        }
+    </script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                dataArray: orgdata
+            },
+            methods: {
+                addOne: function (val) {
+                    let obj = this.dataArray[val];
+                    obj[1]++;
+                    this.dataArray.splice(val, 1, obj);
+                    drawBasic();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

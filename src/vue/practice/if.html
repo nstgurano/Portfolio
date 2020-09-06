@@ -1,0 +1,106 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <label><input v-model="visible" type="checkbox" />表示する</label>
+        <p v-if="visible">チェックボックスはON</p>
+        <p v-else>チェックボックスはOFF</p>
+
+        <button v-if="isShow"  @click="iine">いいね！</button>
+
+        <ul>
+            <li v-for="item in list">{{item}}</li>
+            <li v-for="contents in obj">{{contents.name}}￥{{contents.price}}</li>
+            <li v-for="n in 10">{{n}}*5={{n*5}}</li>
+        </ul>
+        <p v-for="(value,index) in list">{{value}}:{{index}}</p>
+        <h3>注目されている言語ランキング</h3>
+        <table>
+            <thead>
+                <th v-for="item in language">{{item}}</th>
+            </thead>
+            <tbody>
+                <tr v-for="line in ranking">
+                    <td v-for="item in line">{{item}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+            <li v-for="item in myArray">{{item}}</li>
+        </ul>
+        <button @click="addLast">末尾の最後に追加</button>
+        <button @click="addObj(3)">4つ目に追加</button>
+        <button @click="changeObj(0)">1つ目を変更</button>
+        <button v-on:click="deleteObj(1)">2つ目を削除</button>
+
+        <ul>
+            <li v-for="item in sArray">{{item}}</li>
+        </ul>
+        <button @click="sortData(sArray)">ソートする</button>
+
+        <ul>
+            <li v-for="item in num" v-if="item%2===0">{{item}}</li>
+        </ul>
+        <ul>
+            <li v-for="item in num">{{item}}</li>
+        </ul>
+        <button @click="evenData()">偶数だけにする</button>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                visible:false,
+                isShow:true,
+                list:['ジャムパン','メロンパン','アンパン'],
+                obj:[{name:'ジャムパン',price:100},
+                    {name:'メロンパン',price:190},
+                    {name:'アンパン',price:130}],
+                language:['プログラミング言語','2018','2013','2008','2003','1998'],
+                ranking:[
+                    ['Java',1,2,1,1,16],
+                    ['C',2,1,2,2,1],
+                    ['Java',4,4,3,3,2],
+                    ['Java',1,2,1,1,16],
+                    ['Java',1,2,1,1,16],
+                ],
+                myArray:[
+                    '1つ目','2つ目','3つ目','4つ目','5つ目'
+                ],
+                sArray:['one','two','three','four','five'],
+                num:[1,2,3,4,5,6]
+            },
+            methods:{
+                iine:function () {
+                    this.isShow=false
+                },
+                addLast:function(){
+                    this.myArray.push('[末尾に追加]');
+                },
+                addObj:function(index){
+                    this.myArray.splice(index,0,'[追加]');
+                },
+                changeObj:function(index){
+                    this.myArray.splice(index,1,'[追加]');
+                },
+                deleteObj:function(index){
+                    this.myArray.splice(index,1);
+                },
+                sortData:function (listdata) {
+                    listdata.sort((a,b)=> {return (a<b?-1:1)});
+                },
+                evenData:function(){
+                    this.num=this.num.filter(function(value){
+                        return value%2===0;
+                    });
+                }
+            }
+        })
+    </script>
+</body>
+</html>
