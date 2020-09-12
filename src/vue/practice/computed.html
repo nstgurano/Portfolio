@@ -1,0 +1,139 @@
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input v-model.number="price" type="number" />円<br>
+        <input v-model.number="count" type="number" />個
+        <p>合計{{sum}}</p>
+        <p>消費税込みの合計金額{{ taxIncluded }}円</p>
+
+        <p>ご感想は140文字以内でご入力ください</p>
+        <textarea v-model="myText"></textarea>
+        <p v-bind:style="{color:computedColor}">残り{{remaining}}文字です。</p>
+
+        <ul>
+            <input v-model="findWord" type="text" />
+            <li v-for="item in findItem">{{item}}</li>
+        </ul>
+
+        <p v-bind:style="{backgroundColor:mixColor}">{{mixColor}}</p>
+        <input v-model="R" type="range" min="0" max="225" />
+        <input v-model="G" type="range" min="0" max="225" />
+        <input v-model="B" type="range" min="0" max="225" />
+
+        <p>禁止文字は「{{forbiddenText}}」</p>
+        <textarea v-model="inputText"></textarea>
+
+        <h2>残りのタイマーが0に名ttらアラートを出す例</h2>
+        <p>あと{{restSec}}秒</p>
+        <button v-on:click="startTimer">START</button>
+
+        <h2>TWeenMaxのテスト</h2>
+        <button id="movebtn" type="button" onclick="myMove()">移動</button>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+
+        <p>値は、{{animeNumber}}です。</p>
+        <input v-model.number="number" type="number" />
+    </div>
+    <script>
+        function myMove() {
+            TweenMax.to('#movebtn', 1, {
+                x: '500px'
+            });
+        }
+        new Vue({
+            el: '#app',
+            data: {
+                price: 100,
+                count: 1,
+                myText: '今日はいい天気です',
+                findWord: '',
+                items: ['桃太郎', '花咲爺さん', '浦島太郎', 'カチカチ山', 'かぐや姫'],
+                R: 255,
+                G: 150,
+                B: 100,
+                forbiddenText: 'だめ',
+                inputText: '今日はいい天気です。',
+                restSec: 5,
+                timerObj: null,
+                number: 0,
+                tweenNumber: 0
+            },
+            methods: {
+                startTimer: function () {
+                    this.restSec = 5;
+                    this.timerObj = setInterval(() => {
+                        this.restSec--
+                    }, 1000)
+                }
+            },
+            watch: {
+                number: function () {
+                    TweenMax.to(this.$data, 1, {
+                        tweenNumber: this.number
+                    })
+                },
+                restSec: function () {
+                    if (this.restSec <= 0) {
+                        alert('制限時間です');
+                        clearInterval(this.timerObj);
+                    }
+                },
+                inputText: function () {
+                    let pos = this.inputText.indexOf(this.forbiddenText);
+                    if (pos >= 0) {
+                        alert(this.forbiddenText + 'は入力できません');
+                        this.inputText = this.inputText.substr(0, pos);
+                    }
+                }
+            },
+            computed: {
+                animeNumber: function () {
+                    return this.tweenNumber.toFixed(0);
+                },
+                sum: function () {
+                    return this.count * this.price;
+                },
+                taxIncluded: function () {
+                    return this.sum * 1.1;
+                },
+                remaining: function () {
+                    return 140 - this.myText.length;
+                },
+                computedColor: function () {
+                    col = 'green';
+                    if (this.remaining < 20) {
+                        col = 'orange';
+                    }
+                    if (this.remaining < 1) {
+                        col = 'red';
+                    }
+                    return col;
+                },
+                findItem: function () {
+                    if (this.findWord) {
+                        return this.items.filter(item => {
+                            return (item.indexOf(this.findWord) > -1);
+                        }, this);
+                    } else {
+                        return this.items;
+                    }
+                },
+                mixColor: function () {
+                    let ans = "RGB(" + this.R + "," + this.G + "," + this.B + ")";
+                    return ans;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
